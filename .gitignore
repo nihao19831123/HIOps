@@ -1,0 +1,4 @@
+# Ignore large video files and archives
+*.mp4
+*.zip
+*.dump
