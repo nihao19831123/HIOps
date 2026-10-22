@@ -34,6 +34,7 @@
 | `sensor/` | 跨版本轻量端侧探针 v0.3 | .NET 4.8 AnyCPU 单一文件，内置 60s 操作链环形缓冲区、崩溃事件 SHA1 指纹计算、自愈脚本执行 |
 | `backend/` | 核心后端计算引擎 (.NET 8/C#) | `SlidingWindowCorrelator` (120s 滑动窗口聚类)、`PrincipalRcaArbiter` (主要矛盾 RCA 裁决器)、`TopologicalInhibitionEngine` (拓扑依赖抑制)、`PlungeAnomalyDetector` (断崖突变检测) |
 | `tests/` | 自动化测试套件与运行器 | 涵盖 UT-01 到 UT-09 核心逻辑，提供 CLI 运行器 `TestRunner.cs` / `TestRunner.exe` / `run_tests.ps1` |
+| `docker/` | Docker 一键运行与容器编排 | `docker-compose.yml` (PostgreSQL 16 + Web Platform)、`start.bat` 一键启动脚本、全量医院基础数据库脚本 |
 | `scripts/` | 一键安装与部署脚本 | Windows 终端无感部署脚本 (`install.bat`)、Linux 巡检节点部署脚本 (`linux_install.sh`) |
 
 ---
@@ -63,4 +64,26 @@ powershell -ExecutionPolicy Bypass -File tests\run_tests.ps1
 测试结果汇总: 全部通过: 7, 失败: 0
 ==================================================================
 ```
+
+---
+
+## 🐳 Docker 容器化一键部署与体验
+
+平台已完成全套 Docker 容器化编排（PostgreSQL 16 + Web 控制台 + 核心后端 API）：
+
+### 1. 一键启动
+- **Windows 用户**：直接双击运行 [`docker/start.bat`](./docker/start.bat)；
+- **命令行用户**：
+  ```bash
+  cd docker
+  docker-compose up -d
+  ```
+
+### 2. 访问与测试
+- **浏览器访问**：[http://localhost:8088](http://localhost:8088)
+- **管理员账号**：`admin`
+- **管理员密码**：`Admin@123`
+
+### 3. 一键停止
+- 直接双击运行 [`docker/stop.bat`](./docker/stop.bat) 或执行 `docker-compose down`。
 
