@@ -10,8 +10,11 @@ namespace HIOps.EndpointSensor
     static class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            // 初始化配置 (优先命令行参数，其次本地 config.ini，最后默认 114.30)
+            SensorConfig.Init(args);
+
             // 防止多开 (单实例互斥体)
             bool createdNew;
             using (var mutex = new Mutex(true, "Global\\HIOps_Endpoint_Sensor_Mutex", out createdNew))
@@ -29,6 +32,9 @@ namespace HIOps.EndpointSensor
                 var netProbe = new SyntheticNetProbe();
                 var spooler = new OfflineSpooler();
                 var orchestrator = new ForensicOrchestrator(ringBuffer, netProbe, spooler);
+
+                // 启动 30s 周期性遥测心跳工作器 (上报 CPU/内存/磁盘/健康画像至 HIOps 平台)
+                var heartbeatWorker = new HeartbeatWorker();
 
                 // 启动 UI Hang 看门狗定时器 (每 3 秒检查一次)
                 var hangWatchdog = new UiHangWatchdogWorker();
@@ -61,6 +67,7 @@ namespace HIOps.EndpointSensor
                     Application.Run();
                 }
 
+                heartbeatWorker.Dispose();
                 crashWatcher.Dispose();
             }
         }

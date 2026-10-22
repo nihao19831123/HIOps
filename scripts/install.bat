@@ -42,6 +42,7 @@ echo [3/4] 部署探针核心二进制文件至 %ProgramFiles%\HIOps\Sensor...
 set INSTALL_DIR=%ProgramFiles%\HIOps\Sensor
 if not exist "%INSTALL_DIR%" mkdir "%INSTALL_DIR%"
 copy /Y "HIOps.EndpointSensor.exe" "%INSTALL_DIR%\" >nul 2>&1
+if exist "config.ini" copy /Y "config.ini" "%INSTALL_DIR%\" >nul 2>&1
 
 :: 5. 配置 Windows Task Scheduler 自动启动与自拉起保活
 echo [4/4] 注册系统级自启动看护服务 (schtasks)...

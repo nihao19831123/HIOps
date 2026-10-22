@@ -55,6 +55,8 @@ namespace HIOps.EndpointSensor.Core
                     string json = Encoding.UTF8.GetString(bytes);
 
                     var req = new HttpRequestMessage(HttpMethod.Post, reportUrl);
+                    req.Headers.Add("X-HIOps-Agent-Key", SensorConfig.AgentKey);
+                    req.Headers.Add("X-HIOps-Device-Id", Environment.MachineName);
                     req.Headers.Add("X-HIOps-Sensor-Token", sensorToken);
                     req.Content = new StringContent(json, Encoding.UTF8, "application/json");
 

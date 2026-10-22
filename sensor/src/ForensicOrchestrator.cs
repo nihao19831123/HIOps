@@ -24,14 +24,14 @@ namespace HIOps.EndpointSensor
             ActionTrailRingBuffer actionTrail, 
             SyntheticNetProbe netProbe, 
             OfflineSpooler spooler,
-            string reportUrl = "http://192.168.114.30:5080/api/v1/sensors/forensics/report",
-            string sensorToken = "HIOps-Auth-2026-X9")
+            string reportUrl = null,
+            string sensorToken = null)
         {
             _actionTrail = actionTrail;
             _netProbe = netProbe;
             _spooler = spooler;
-            _reportUrl = reportUrl;
-            _sensorToken = sensorToken;
+            _reportUrl = reportUrl ?? (SensorConfig.ServerUrl.TrimEnd('/') + "/api/v1/sensors/forensics/report");
+            _sensorToken = sensorToken ?? SensorConfig.AgentKey;
         }
 
         public async Task CaptureAndDispatchAsync(

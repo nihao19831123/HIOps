@@ -79,6 +79,26 @@ namespace HIOps.Installer
                 File.WriteAllBytes(targetExe, buffer);
             }
 
+            // 写入或更新 config.ini 配置文件
+            string targetConfig = Path.Combine(targetDir, "config.ini");
+            if (!File.Exists(targetConfig))
+            {
+                using (var cstream = asm.GetManifestResourceStream("ConfigPayload"))
+                {
+                    if (cstream != null)
+                    {
+                        byte[] cbuf = new byte[cstream.Length];
+                        cstream.Read(cbuf, 0, cbuf.Length);
+                        File.WriteAllBytes(targetConfig, cbuf);
+                    }
+                    else
+                    {
+                        string defaultIni = "# HIOps Client Configuration\r\nServerUrl=http://192.168.114.30:5080\r\nAgentKey=hiops_3a2f5033c247fb06d2c8867fee93205fe46bd416d44c1d42d9f3fc2aa2aadaae\r\nHeartbeatSeconds=30\r\n";
+                        File.WriteAllText(targetConfig, defaultIni);
+                    }
+                }
+            }
+
             // 注册开机自启动计划任务 (schtasks)
             var psi = new ProcessStartInfo
             {

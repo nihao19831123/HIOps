@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Models\ActionEntry.cs" />
     <Compile Include="Models\ForensicPackage.cs" />
+    <Compile Include="Core\SensorConfig.cs" />
+    <Compile Include="Core\HeartbeatWorker.cs" />
     <Compile Include="Core\ActionTrailRingBuffer.cs" />
     <Compile Include="Core\PiiMaskingEngine.cs" />
     <Compile Include="Core\SyntheticNetProbe.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="SelfHealing\AutoHealingExecutor.cs" />
     <Compile Include="UI\SysTrayCompanion.cs" />
     <Compile Include="ForensicOrchestrator.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

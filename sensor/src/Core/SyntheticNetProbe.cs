@@ -22,8 +22,9 @@ namespace HIOps.EndpointSensor.Core
 
         private readonly List<TargetEndpoint> _targets = new List<TargetEndpoint>
         {
-            new TargetEndpoint { Name = "ORACLE_1521", Host = "192.168.114.29", Port = 1521 },
-            new TargetEndpoint { Name = "HIS_GATEWAY_8080", Host = "192.168.114.30", Port = 5080 }
+            new TargetEndpoint { Name = "ZABBIX_HTTP_80", Host = "192.168.114.29", Port = 80 },
+            new TargetEndpoint { Name = "ZABBIX_SRV_10051", Host = "192.168.114.29", Port = 10051 },
+            new TargetEndpoint { Name = "HIOPS_API_5080", Host = "192.168.114.30", Port = 5080 }
         };
 
         public async Task<List<NetProbeResult>> ProbeAllAsync(int timeoutMs = 2000)
