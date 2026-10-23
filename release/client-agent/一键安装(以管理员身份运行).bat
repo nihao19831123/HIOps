@@ -39,6 +39,8 @@ if not exist "%ProgramData%\HIOps\spool" (
 
 :: 4. 拷贝探针程序至安装目录
 echo [3/4] 部署探针核心二进制文件至 %ProgramFiles%\HIOps\Sensor...
+taskkill /f /im HIOps.EndpointSensor.exe >nul 2>&1
+timeout /t 1 >nul
 set INSTALL_DIR=%ProgramFiles%\HIOps\Sensor
 if not exist "%INSTALL_DIR%" mkdir "%INSTALL_DIR%"
 copy /Y "HIOps.EndpointSensor.exe" "%INSTALL_DIR%\" >nul 2>&1
