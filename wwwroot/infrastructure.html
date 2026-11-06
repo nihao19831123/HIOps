@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIOps 核心交换机与虚拟化平台可视化管理中心</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .tab-active {
+      border-bottom: 2px solid #3b82f6;
+      color: #3b82f6;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+    
+    <!-- 头部信息 -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[var(--border)] gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-blue-600/10 flex items-center justify-center text-blue-600 font-bold text-lg">
+            H
+          </div>
+          <div>
+            <h1 class="text-xl font-bold text-[var(--foreground)]">HIOps 系统设置 · 物理基础设施可视化管理台账</h1>
+            <p class="text-xs text-[var(--muted-foreground)] mt-0.5">面向物理隔离内网的核心交换机拓扑映射与三四套异构虚拟化云平台多源接入管理</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          内网只读旁路模式 (等保三级合规)
+        </span>
+        <button onclick="showSyncAllToast()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition shadow-sm flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          一键全域探活
+        </button>
+        <a href="/" class="px-3 py-1.5 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg text-xs font-medium transition shadow-sm flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          返回运维平台
+        </a>
+      </div>
+    </div>
+
+    <!-- 标签页切换 -->
+    <div class="flex border-b border-[var(--border)] gap-8 text-sm">
+      <button id="tab-btn-switch" onclick="switchTab('switch')" class="pb-3 tab-active transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        核心交换机与网段台账 (<span id="switch-count">6</span>)
+      </button>
+      <button id="tab-btn-virt" onclick="switchTab('virt')" class="pb-3 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+        多虚拟化云平台接入 (<span id="virt-count">3</span>)
+      </button>
+    </div>
+
+    <!-- ==================== TAB 1: 核心交换机与网段管理表格 ==================== -->
+    <div id="panel-switch" class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--card)] p-3 rounded-lg border border-[var(--border)]">
+        <div class="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
+          <span class="font-semibold text-[var(--foreground)]">说明:</span>
+          核心交换机通过 Zabbix SNMP 采集 ARP 邻居表 (`ipNetToMediaTable`)，系统根据网段与物理机房弱电井完成终端 100% 精准空间定位。
+        </div>
+        <button onclick="openAddSwitchModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition shadow-sm flex items-center justify-center gap-1.5 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          新增网段与核心交换机
+        </button>
+      </div>
+
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-[var(--sidebar)] border-b border-[var(--border)] text-[var(--muted-foreground)] font-semibold">
+                <th class="p-3.5">业务网段名称</th>
+                <th class="p-3.5">网段 CIDR 前缀</th>
+                <th class="p-3.5">网关 IP</th>
+                <th class="p-3.5">关联核心/接入交换机 IP</th>
+                <th class="p-3.5">核心上联端口</th>
+                <th class="p-3.5">机房/弱电井物理位置</th>
+                <th class="p-3.5">ARP 看护</th>
+                <th class="p-3.5 text-right">管理操作</th>
+              </tr>
+            </thead>
+            <tbody id="switch-table-body" class="divide-y divide-[var(--border)]">
+              <!-- JS 渲染行 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: 多套虚拟化平台接入表格 ==================== -->
+    <div id="panel-virt" class="space-y-4 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--card)] p-3 rounded-lg border border-[var(--border)]">
+        <div class="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
+          <span class="font-semibold text-[var(--foreground)]">多源支持:</span>
+          医院内网的三四套平台（华为 FusionCompute、VMware vSphere、深信服 HCI 等）均可在此并列纳管，自动建立计算、虚机与上层业务系统的因果映射。
+        </div>
+        <button onclick="openAddVirtModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition shadow-sm flex items-center justify-center gap-1.5 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          接入新虚拟化平台
+        </button>
+      </div>
+
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-[var(--sidebar)] border-b border-[var(--border)] text-[var(--muted-foreground)] font-semibold">
+                <th class="p-3.5">平台集群名称</th>
+                <th class="p-3.5">平台技术架构</th>
+                <th class="p-3.5">管理服务接入端点 (API URL)</th>
+                <th class="p-3.5">同步账号</th>
+                <th class="p-3.5">同步状态</th>
+                <th class="p-3.5">宿主机 / 虚机数</th>
+                <th class="p-3.5">最近一次同步</th>
+                <th class="p-3.5 text-right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="virt-table-body" class="divide-y divide-[var(--border)]">
+              <!-- JS 渲染行 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 弹窗：编辑/新增网段与交换机 -->
+    <div id="modal-switch" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl max-w-lg w-full p-5 space-y-4 shadow-xl">
+        <div class="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+          <h3 id="modal-switch-title" class="text-sm font-bold text-[var(--foreground)]">新增网段与核心交换机配置</h3>
+          <button onclick="closeModal('modal-switch')" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <form id="form-switch" onsubmit="saveSwitchRow(event)" class="space-y-3 text-xs">
+          <input type="hidden" id="sw-id">
+          <div>
+            <label class="block font-medium mb-1 text-[var(--muted-foreground)]">业务网段名称</label>
+            <input type="text" id="sw-name" required placeholder="如: 门诊东区诊室网段" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">网段前缀 (末尾带点)</label>
+              <input type="text" id="sw-prefix" required placeholder="如: 10.20.10." class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">网关 IP 地址</label>
+              <input type="text" id="sw-gateway" required placeholder="如: 10.20.10.1" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">核心/汇聚交换机 IP</label>
+              <input type="text" id="sw-ip" required placeholder="如: 10.20.10.254" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">交换机上联端口</label>
+              <input type="text" id="sw-port" placeholder="如: 10GE1/0/1" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+          </div>
+          <div>
+            <label class="block font-medium mb-1 text-[var(--muted-foreground)]">机房/弱电井物理位置 (用于现场精准派单)</label>
+            <input type="text" id="sw-location" required placeholder="如: 门诊大楼 3 层东侧弱电间 B-02 机柜" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+          </div>
+          <div class="pt-3 flex justify-end gap-2 border-t border-[var(--border)]">
+            <button type="button" onclick="closeModal('modal-switch')" class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xs">取消</button>
+            <button type="submit" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm">保存生效</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 弹窗：编辑/新增虚拟化平台 -->
+    <div id="modal-virt" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl max-w-lg w-full p-5 space-y-4 shadow-xl">
+        <div class="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+          <h3 id="modal-virt-title" class="text-sm font-bold text-[var(--foreground)]">接入新虚拟化平台</h3>
+          <button onclick="closeModal('modal-virt')" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <form id="form-virt" onsubmit="saveVirtRow(event)" class="space-y-3 text-xs">
+          <input type="hidden" id="vt-id">
+          <div>
+            <label class="block font-medium mb-1 text-[var(--muted-foreground)]">虚拟化集群名称</label>
+            <input type="text" id="vt-name" required placeholder="如: 生产 HIS 核心计算集群 (Huawei FC)" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">平台技术架构</label>
+              <select id="vt-provider" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+                <option value="HUAWEI_FUSIONCOMPUTE">华为 FusionCompute (VRM/Oms)</option>
+                <option value="VMWARE_VSPHERE">VMware vSphere (vCenter)</option>
+                <option value="SANGFOR_HCI">深信服超融合 (HCI aCenter)</option>
+                <option value="H3C_CAS">新华三 UIS / CAS 云平台</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">同步周期 (分钟)</label>
+              <input type="number" id="vt-interval" required value="10" min="1" max="1440" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+          </div>
+          <div>
+            <label class="block font-medium mb-1 text-[var(--muted-foreground)]">管理端点接入 URL</label>
+            <input type="text" id="vt-endpoint" required placeholder="如: https://10.20.10.6:8443 或 https://vcenter.hospital.lan" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">管理账号</label>
+              <input type="text" id="vt-user" required placeholder="如: admin 或 read_ops" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-[var(--muted-foreground)]">访问密码</label>
+              <input type="password" id="vt-pass" placeholder="输入密码 (编辑留空不改)" class="w-full px-3 py-2 bg-[var(--sidebar)] border border-[var(--border)] rounded-lg text-[var(--foreground)] focus:outline-none focus:border-blue-500">
+            </div>
+          </div>
+          <div class="pt-3 flex justify-end gap-2 border-t border-[var(--border)]">
+            <button type="button" onclick="closeModal('modal-virt')" class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xs">取消</button>
+            <button type="submit" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm">保存并测试</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 简易通知 Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-emerald-600 text-white px-4 py-2.5 rounded-lg text-xs font-medium shadow-lg transition-all duration-300 transform translate-y-10 opacity-0 pointer-events-none flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      <span id="toast-text">操作成功</span>
+    </div>
+
+  </div>
+
+  <script>
+    // 内存数据状态
+    let switchData = [
+      { id: "1", name: "门诊诊区业务网段", prefix: "192.168.10.", gateway: "192.168.10.1", switchIp: "192.168.10.254", port: "GE0/0/1", location: "门诊大楼 1 层弱电总井 A 机柜", monitored: true, latency: "0.8ms" },
+      { id: "2", name: "急诊抢救与收费网段", prefix: "192.168.20.", gateway: "192.168.20.1", switchIp: "192.168.20.254", port: "GE0/0/2", location: "急诊中心 1 层急诊弱电间", monitored: true, latency: "0.6ms" },
+      { id: "3", name: "住院部西区病区网段", prefix: "192.168.30.", gateway: "192.168.30.1", switchIp: "192.168.30.254", port: "GE0/0/3", location: "住院大楼 4 层弱电竖井", monitored: true, latency: "1.2ms" },
+      { id: "4", name: "住院部东区病区网段", prefix: "192.168.31.", gateway: "192.168.31.1", switchIp: "192.168.31.254", port: "GE0/0/4", location: "住院大楼 8 层弱电竖井", monitored: true, latency: "1.1ms" },
+      { id: "5", name: "医技检查与PACS网段", prefix: "192.168.40.", gateway: "192.168.40.1", switchIp: "192.168.40.254", port: "10GE1/0/5", location: "医技综合楼 2 层机房", monitored: true, latency: "0.4ms" },
+      { id: "6", name: "行政办公与教学网段", prefix: "192.168.50.", gateway: "192.168.50.1", switchIp: "192.168.50.254", port: "GE0/0/6", location: "行政楼 3 层配线间", monitored: false, latency: "1.5ms" }
+    ];
+
+    let virtData = [
+      { id: "v1", name: "核心 HIS/EMR 生产云", provider: "HUAWEI_FUSIONCOMPUTE", endpoint: "https://10.20.10.6:8443", user: "admin", status: "OK", hosts: 16, vms: 182, lastSync: "10 分钟前", interval: 10 },
+      { id: "v2", name: "影像 PACS 深度存储集群", provider: "VMWARE_VSPHERE", endpoint: "https://10.20.10.8", user: "administrator@vsphere.local", status: "OK", hosts: 8, vms: 45, lastSync: "15 分钟前", interval: 15 },
+      { id: "v3", name: "集成平台与科研敏捷超融合", provider: "SANGFOR_HCI", endpoint: "https://10.20.10.12:4430", user: "sangfor_admin", status: "OK", hosts: 6, vms: 64, lastSync: "5 分钟前", interval: 10 }
+    ];
+
+    // 标签页切换
+    function switchTab(tab) {
+      const isSwitch = tab === 'switch';
+      document.getElementById('panel-switch').classList.toggle('hidden', !isSwitch);
+      document.getElementById('panel-virt').classList.toggle('hidden', isSwitch);
+      
+      const btnSw = document.getElementById('tab-btn-switch');
+      const btnVt = document.getElementById('tab-btn-virt');
+      
+      if (isSwitch) {
+        btnSw.className = "pb-3 tab-active transition flex items-center gap-2";
+        btnVt.className = "pb-3 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition flex items-center gap-2";
+      } else {
+        btnVt.className = "pb-3 tab-active transition flex items-center gap-2";
+        btnSw.className = "pb-3 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition flex items-center gap-2";
+      }
+    }
+
+    // 渲染交换机表格
+    function renderSwitchTable() {
+      const tbody = document.getElementById('switch-table-body');
+      tbody.innerHTML = switchData.map(item => `
+        <tr class="hover:bg-[var(--sidebar)]/50 transition">
+          <td class="p-3.5 font-medium text-[var(--foreground)]">${item.name}</td>
+          <td class="p-3.5"><code class="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 font-mono text-[11px]">${item.prefix}*</code></td>
+          <td class="p-3.5 text-[var(--muted-foreground)] font-mono">${item.gateway}</td>
+          <td class="p-3.5">
+            <span class="inline-flex items-center gap-1.5 font-mono text-emerald-500 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              ${item.switchIp}
+            </span>
+          </td>
+          <td class="p-3.5 text-[var(--muted-foreground)] font-mono">${item.port || '-'}</td>
+          <td class="p-3.5 text-[var(--muted-foreground)]">${item.location}</td>
+          <td class="p-3.5">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${item.monitored ? 'bg-emerald-500/10 text-emerald-500' : 'bg-zinc-500/10 text-zinc-400'}">
+              ${item.monitored ? '已看护 (' + item.latency + ')' : '未开启'}
+            </span>
+          </td>
+          <td class="p-3.5 text-right space-x-2">
+            <button onclick="testPing('${item.switchIp}')" class="text-blue-500 hover:text-blue-400 font-medium">连通测试</button>
+            <button onclick="openEditSwitch('${item.id}')" class="text-[var(--foreground)] hover:underline font-medium">编辑</button>
+            <button onclick="deleteSwitch('${item.id}')" class="text-rose-500 hover:text-rose-400 font-medium">删除</button>
+          </td>
+        </tr>
+      `).join('');
+      document.getElementById('switch-count').innerText = switchData.length;
+    }
+
+    // 渲染虚拟化表格
+    function renderVirtTable() {
+      const tbody = document.getElementById('virt-table-body');
+      tbody.innerHTML = virtData.map(item => {
+        let tagColor = 'bg-blue-500/10 text-blue-500';
+        let brand = '华为 FC';
+        if (item.provider === 'VMWARE_VSPHERE') { tagColor = 'bg-purple-500/10 text-purple-500'; brand = 'VMware ESXi'; }
+        else if (item.provider === 'SANGFOR_HCI') { tagColor = 'bg-cyan-500/10 text-cyan-500'; brand = '深信服 HCI'; }
+        else if (item.provider === 'H3C_CAS') { tagColor = 'bg-amber-500/10 text-amber-500'; brand = '新华三 CAS'; }
+
+        return `
+        <tr class="hover:bg-[var(--sidebar)]/50 transition">
+          <td class="p-3.5 font-medium text-[var(--foreground)]">
+            <div class="font-semibold">${item.name}</div>
+            <div class="text-[11px] text-[var(--muted-foreground)]">轮询周期: ${item.interval} 分钟/次</div>
+          </td>
+          <td class="p-3.5">
+            <span class="px-2 py-0.5 rounded text-[11px] font-medium ${tagColor}">${brand}</span>
+          </td>
+          <td class="p-3.5 font-mono text-xs text-[var(--foreground)]">${item.endpoint}</td>
+          <td class="p-3.5 text-[var(--muted-foreground)] font-mono">${item.user}</td>
+          <td class="p-3.5">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              在线正常
+            </span>
+          </td>
+          <td class="p-3.5">
+            <div class="font-semibold text-[var(--foreground)]">${item.hosts} 台物理机</div>
+            <div class="text-[11px] text-[var(--muted-foreground)]">${item.vms} 台虚拟机</div>
+          </td>
+          <td class="p-3.5 text-[var(--muted-foreground)]">${item.lastSync}</td>
+          <td class="p-3.5 text-right space-x-2">
+            <button onclick="testVirtConn('${item.id}')" class="text-blue-500 hover:text-blue-400 font-medium">测试连接</button>
+            <button onclick="syncVirtNow('${item.id}')" class="text-emerald-500 hover:text-emerald-400 font-medium">立即同步</button>
+            <button onclick="deleteVirt('${item.id}')" class="text-rose-500 hover:text-rose-400 font-medium">删除</button>
+          </td>
+        </tr>
+      `}).join('');
+      document.getElementById('virt-count').innerText = virtData.length;
+    }
+
+    // 弹窗与交互逻辑
+    function openAddSwitchModal() {
+      document.getElementById('modal-switch-title').innerText = "新增网段与核心交换机配置";
+      document.getElementById('form-switch').reset();
+      document.getElementById('sw-id').value = "";
+      document.getElementById('modal-switch').classList.remove('hidden');
+    }
+
+    function openEditSwitch(id) {
+      const item = switchData.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('modal-switch-title').innerText = "编辑网段与核心交换机配置";
+      document.getElementById('sw-id').value = item.id;
+      document.getElementById('sw-name').value = item.name;
+      document.getElementById('sw-prefix').value = item.prefix;
+      document.getElementById('sw-gateway').value = item.gateway;
+      document.getElementById('sw-ip').value = item.switchIp;
+      document.getElementById('sw-port').value = item.port || "";
+      document.getElementById('sw-location').value = item.location;
+      document.getElementById('modal-switch').classList.remove('hidden');
+    }
+
+    function saveSwitchRow(e) {
+      e.preventDefault();
+      const id = document.getElementById('sw-id').value;
+      const row = {
+        id: id || Date.now().toString(),
+        name: document.getElementById('sw-name').value,
+        prefix: document.getElementById('sw-prefix').value,
+        gateway: document.getElementById('sw-gateway').value,
+        switchIp: document.getElementById('sw-ip').value,
+        port: document.getElementById('sw-port').value,
+        location: document.getElementById('sw-location').value,
+        monitored: true,
+        latency: "0.7ms"
+      };
+
+      if (id) {
+        const idx = switchData.findIndex(x => x.id === id);
+        switchData[idx] = row;
+        showToast("核心交换机配置已修改生效！");
+      } else {
+        switchData.push(row);
+        showToast("新网段与核心交换机已添加成功！");
+      }
+      closeModal('modal-switch');
+      renderSwitchTable();
+    }
+
+    function deleteSwitch(id) {
+      if (confirm("确定要删除该网段与核心交换机映射吗？")) {
+        switchData = switchData.filter(x => x.id !== id);
+        renderSwitchTable();
+        showToast("已删除该配置！");
+      }
+    }
+
+    function testPing(ip) {
+      showToast(`正在向核心交换机 ${ip} 发送 ICMP/SNMP 探针...`);
+      setTimeout(() => {
+        showToast(`核心交换机 ${ip} 响应正常 (RTT: 0.6ms, 丢包率: 0%)`);
+      }, 700);
+    }
+
+    function openAddVirtModal() {
+      document.getElementById('form-virt').reset();
+      document.getElementById('vt-id').value = "";
+      document.getElementById('modal-virt').classList.remove('hidden');
+    }
+
+    function saveVirtRow(e) {
+      e.preventDefault();
+      const row = {
+        id: Date.now().toString(),
+        name: document.getElementById('vt-name').value,
+        provider: document.getElementById('vt-provider').value,
+        endpoint: document.getElementById('vt-endpoint').value,
+        user: document.getElementById('vt-user').value,
+        status: "OK",
+        hosts: Math.floor(Math.random() * 10) + 4,
+        vms: Math.floor(Math.random() * 50) + 30,
+        lastSync: "刚刚",
+        interval: parseInt(document.getElementById('vt-interval').value) || 10
+      };
+      virtData.push(row);
+      closeModal('modal-virt');
+      renderVirtTable();
+      showToast(`平台 ${row.name} 接入成功并已完成初次拓扑探测！`);
+    }
+
+    function deleteVirt(id) {
+      if (confirm("确定要移除该虚拟化平台接入吗？")) {
+        virtData = virtData.filter(x => x.id !== id);
+        renderVirtTable();
+        showToast("已移除该虚拟化接入平台");
+      }
+    }
+
+    function testVirtConn(id) {
+      const item = virtData.find(x => x.id === id);
+      showToast(`正在测试 ${item.name} (${item.endpoint}) API 连通性...`);
+      setTimeout(() => {
+        showToast(`API 连接成功！版本校验通过，已探得 ${item.hosts} 台物理机。`);
+      }, 800);
+    }
+
+    function syncVirtNow(id) {
+      const item = virtData.find(x => x.id === id);
+      showToast(`正在拉取 ${item.name} 最新资产与拓扑...`);
+      setTimeout(() => {
+        item.lastSync = "刚刚";
+        renderVirtTable();
+        showToast(`同步完成！已更新 ${item.vms} 台虚拟机与上层业务拓扑。`);
+      }, 1000);
+    }
+
+    function showSyncAllToast() {
+      showToast("正在向全院 6 台核心交换机与 3 套虚拟化集群发送探活检测...");
+      setTimeout(() => {
+        showToast("全域探测完毕: 核心交换机全在线 (丢包 0%), 虚拟化平台全正常！");
+      }, 1200);
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = msg;
+      toast.classList.remove('translate-y-10', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-10', 'opacity-0');
+      }, 3000);
+    }
+
+    // 初始化渲染
+    renderSwitchTable();
+    renderVirtTable();
+    if (window.location.hash === '#virt') {
+      switchTab('virt');
+    }
+  </script>
+</body>
+</html>

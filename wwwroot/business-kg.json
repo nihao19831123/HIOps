@@ -1,0 +1,8118 @@
+{
+ "generatedAt": null,
+ "source": "集成平台(Orion Health Rhapsody)配置导出解析;由 ~/integ-kg/topology.json 生成",
+ "platform": {
+  "name": "集成平台 Rhapsody",
+  "ip": "192.168.0.79",
+  "vendor": "Orion Health Rhapsody"
+ },
+ "note": "内网业务系统关系图。HIOps 部署在外网、且 KG 里的业务服务器 IP(192.168.0.x 等)与 HIOps 资产 IP 零交集,所以本图**只表达业务系统之间的关系,不含资产绑定**(绑定待内网打通后另行处理)。",
+ "systems": [
+  {
+   "id": "hishttp",
+   "name": "HIS系统(Http)",
+   "grants": 67,
+   "subs": 5,
+   "topServices": [
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "HIS发送消息到远图",
+    "电子票据-住院开票",
+    "电子票据-门诊挂号",
+    "电子票据-冲红",
+    "电子票据-门诊收费",
+    "医疗卫生机构（科室）信息注册服务"
+   ],
+   "subscribed": [
+    "empi患者信息查询服务",
+    "电子票据-门诊收费",
+    "电子票据-住院开票",
+    "电子票据-门诊挂号",
+    "电子票据-冲红"
+   ]
+  },
+  {
+   "id": "kdhis",
+   "name": "科大HIS",
+   "grants": 51,
+   "subs": 1,
+   "topServices": [
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "获取PACS检查报告",
+    "HIS发送消息到远图",
+    "EMPI患者更新",
+    "通用字典查询服务",
+    "通用值域查询服务",
+    "EMPI患者注册",
+    "推送门诊挂号信息"
+   ],
+   "subscribed": [
+    "心电报告接收服务"
+   ]
+  },
+  {
+   "id": "mtl",
+   "name": "医生站",
+   "grants": 51,
+   "subs": 1,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "获取PACS检查报告",
+    "危急值上报服务",
+    "危急值上报服务",
+    "检验报告下明细服务"
+   ],
+   "subscribed": [
+    "检验报告接收服务"
+   ]
+  },
+  {
+   "id": "hmbm",
+   "name": "惠民便民平台",
+   "grants": 43,
+   "subs": 3,
+   "topServices": [
+    "查询检查报告",
+    "根据统计时间范围查询统计量",
+    "办理电子健康卡",
+    "根据就诊卡号查询用户信息",
+    "推送电子就诊卡信息",
+    "待缴费信息查询接口",
+    "门诊支付成功通知",
+    "门诊费用查询"
+   ],
+   "subscribed": [
+    "检验报告接收服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "待缴费信息"
+   ]
+  },
+  {
+   "id": "jzxt",
+   "name": "急诊系统",
+   "grants": 36,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "主数据 - 值域",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "诊间结算",
+    "诊间结算"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "his",
+   "name": "HIS系统",
+   "grants": 27,
+   "subs": 4,
+   "topServices": [
+    "获取PACS检查报告",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "EMPI患者更新",
+    "发送统一登录信息",
+    "EMPI患者注册",
+    "手术申请信息新增服务",
+    "检查危急值反馈服务"
+   ],
+   "subscribed": [
+    "检验报告接收服务",
+    "EMPI患者注册",
+    "EMPI患者更新",
+    "empi患者信息查询服务"
+   ]
+  },
+  {
+   "id": "lis",
+   "name": "LIS系统",
+   "grants": 22,
+   "subs": 1,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生人员信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "危急值上报服务",
+    "危急值上报服务",
+    "发送统一登录信息",
+    "根据卡号查询患者ID服务",
+    "核酸采样信息推送服务"
+   ],
+   "subscribed": [
+    "检验申请信息更新服务"
+   ]
+  },
+  {
+   "id": "btms",
+   "name": "输血系统",
+   "grants": 21,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "HIS计费服务",
+    "获取门诊病人信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "peis",
+   "name": "体检系统",
+   "grants": 18,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "主数据 - 值域",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "EMPI患者更新",
+    "empi患者信息查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "ydhl",
+   "name": "移动护理系统",
+   "grants": 17,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "移动护理推送医嘱执行信息",
+    "移动护理获取科室患者列表",
+    "移动护理获取出入院列表",
+    "移动护理体温单页数列表",
+    "移动护理体温单图片"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "zzj",
+   "name": "自助机",
+   "grants": 14,
+   "subs": 0,
+   "topServices": [
+    "获取PACS检查报告",
+    "自助机-获取患者检验报告PDF文件流",
+    "自助机-获取患者检验报告列表",
+    "自助机-门诊缴费",
+    "自助机-查询消费明细",
+    "医嘱信息查询服务",
+    "自助机-调用该接口为用户发放一本病历",
+    "自助机-门诊收费结账"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "icu",
+   "name": "重症监护系统",
+   "grants": 13,
+   "subs": 8,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "获取住院患者基本信息",
+    "获取住院患者入院信息",
+    "获取住院患者在科信息"
+   ],
+   "subscribed": [
+    "检验报告接收服务",
+    "HIS推送住院患者信息",
+    "HIS推送患者在科信息",
+    "HIS推送患者诊断信息",
+    "HIS推送患者换床信息",
+    "HIS推送患者出科信息",
+    "HIS推送患者医嘱信息",
+    "移动护理推送重症信息"
+   ]
+  },
+  {
+   "id": "hxzzj",
+   "name": "华信自助机",
+   "grants": 13,
+   "subs": 0,
+   "topServices": [
+    "获取PACS检查报告",
+    "HIS发送消息到远图",
+    "查询检查报告",
+    "查询患者挂号信息",
+    "保存大病挂号信息",
+    "查询患者预约信息",
+    "保存患者住院信息",
+    "住院预结算"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "pacs",
+   "name": "影像系统",
+   "grants": 12,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "危急值上报服务",
+    "危急值上报服务",
+    "获取住院患者信息",
+    "PACS危急值撤销服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "cbcs",
+   "name": "成本核算系统",
+   "grants": 10,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "收费类别字典",
+    "收费项目字典",
+    "ICD10疾病诊断字典",
+    "ICD9手术编码字典"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "wlgl",
+   "name": "物流管理系统",
+   "grants": 10,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "HIS计费服务",
+    "获取门诊病人信息",
+    "获取住院患者信息",
+    "获取高值耗材字典"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "dtxd",
+   "name": "动态心电系统",
+   "grants": 10,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "危急值上报服务",
+    "危急值上报服务",
+    "PACS危急值撤销服务",
+    "心电申请单查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "pdjh",
+   "name": "排队叫号系统",
+   "grants": 10,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "HIS发送消息到远图",
+    "推送门诊挂号信息",
+    "门诊退号变更通知",
+    "队列类型信息",
+    "叫号患者挂号信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "zhbf",
+   "name": "智慧病房系统",
+   "grants": 10,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "字典注册更新推送服务",
+    "获取住院患者信息",
+    "住院患者入出转信息查询",
+    "患者费用清单"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "ecg",
+   "name": "心电系统",
+   "grants": 9,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域",
+    "危急值上报服务",
+    "危急值上报服务",
+    "心电申请单查询服务",
+    "心电报告接收服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "zlxt",
+   "name": "治疗系统",
+   "grants": 9,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "HIS计费服务",
+    "治疗门诊医嘱查询",
+    "获取收费项目信息",
+    "治疗住院医嘱查询",
+    "获取康复住院患者信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "jjk",
+   "name": "家佳康",
+   "grants": 9,
+   "subs": 0,
+   "topServices": [
+    "HIS发送消息到远图",
+    "诊间结算",
+    "诊间结算",
+    "empi患者信息查询服务",
+    "保存门诊处方或诊断",
+    "删除门诊处方或诊断",
+    "诊间结算获取缴费金额",
+    "查询检验检查收费项目字典"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "xtxt",
+   "name": "血透系统",
+   "grants": 8,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "获取PACS检查报告",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "通用字典查询服务",
+    "通用值域查询服务",
+    "字典注册更新推送服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "sm",
+   "name": "手术麻醉系统",
+   "grants": 7,
+   "subs": 1,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生人员信息查询服务",
+    "主数据 - 值域",
+    "检验报告下明细服务",
+    "获取检验报告信息",
+    "手麻排班",
+    "手麻系统手术信息回写"
+   ],
+   "subscribed": [
+    "检验报告接收服务"
+   ]
+  },
+  {
+   "id": "hics",
+   "name": "院感系统",
+   "grants": 7,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "住院患者出入院信息查询",
+    "住院患者转科记录查询",
+    "",
+    "住院患者医嘱信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "emr",
+   "name": "EMR电子病历系统",
+   "grants": 7,
+   "subs": 5,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "EMPI患者更新",
+    "EMPI患者注册",
+    "电子病历文档注册服务",
+    "Drgs事前预质控"
+   ],
+   "subscribed": [
+    "HIS系统原始医嘱信息",
+    "检验报告接收服务",
+    "HIS拆分的执行医嘱信息",
+    "HIS没有拆分的原始医嘱-去掉移动护理部分",
+    "HIS推送患者医嘱信息"
+   ]
+  },
+  {
+   "id": "wlhc",
+   "name": "韦乐海茨智能药柜系统",
+   "grants": 7,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "主数据 - 值域",
+    "主数据 - 值域",
+    "发药完成通知服务",
+    "处方信息查询服务",
+    ""
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "gbgm",
+   "name": "血糖监测系统",
+   "grants": 5,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "主数据 - 值域",
+    "核酸采样信息推送服务",
+    "血糖回写"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "blxt",
+   "name": "病理系统",
+   "grants": 5,
+   "subs": 0,
+   "topServices": [
+    "危急值上报服务",
+    "危急值上报服务",
+    "PACS危急值撤销服务",
+    "检查申请信息查询服务",
+    "检查申请信息更新服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "wzh",
+   "name": "无纸化系统",
+   "grants": 5,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生人员信息查询服务",
+    "获取PACS检查报告",
+    "推送企业微信消息",
+    "心电报告查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "ZiChanGuanLi",
+   "name": "资产管理系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生人员信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "nds",
+   "name": "护理总动员系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "xlct",
+   "name": "心理CT系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "身份信息",
+    "处方信息",
+    "测评报告",
+    "更新处方标记"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "xhzs",
+   "name": "新华追溯系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息",
+    "主数据 - 值域"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "hr",
+   "name": "人事系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生机构（科室）信息注册服务",
+    "医疗卫生机构（科室）信息更新服务",
+    "主数据-新增人员信息",
+    "医疗卫生人员信息更新服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "yjyy",
+   "name": "医技预约系统",
+   "grants": 4,
+   "subs": 0,
+   "topServices": [
+    "医技预约申请单预约状态回写推送",
+    "预约系统推送医技申请单信息",
+    "预约系统推送医技到诊确认信息",
+    "预约系统推送医技申请单作废信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "gw",
+   "name": "公共卫生系统",
+   "grants": 3,
+   "subs": 0,
+   "topServices": [
+    "公卫系统发送传染病数据到青岛市疾控(外部系统)",
+    "公卫系统发送信息到国家食源性疾病系统",
+    "公卫-获取患者诊断"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "pass",
+   "name": "合理用药",
+   "grants": 3,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务",
+    "主数据 - 值域"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "hmps",
+   "name": "360全景视图",
+   "grants": 3,
+   "subs": 1,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "自助机-获取患者检验报告PDF文件流",
+    "360(hmps)获取empi_id"
+   ],
+   "subscribed": [
+    "360(hmps)获取empi_id"
+   ]
+  },
+  {
+   "id": "hip-monitor",
+   "name": "集成平台监控系统",
+   "grants": 3,
+   "subs": 2,
+   "topServices": [
+    "推送企业微信消息",
+    "empi数据数量查询",
+    "获取共享文档总数量"
+   ],
+   "subscribed": [
+    "empi数据数量查询",
+    "获取共享文档总数量"
+   ]
+  },
+  {
+   "id": "oa",
+   "name": "OA管理系统",
+   "grants": 3,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生机构（科室）信息查询服务",
+    "医疗卫生人员信息查询服务",
+    "通过key从Webdis获取VALUE,用于单点登录用户信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "aes",
+   "name": "不良事件系统",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "drgs",
+   "name": "Drgs",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "HIS结算单据查询服务",
+    "HIS结算单据明细查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "nmdm",
+   "name": "主数据管理系统",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "字典注册更新推送服务",
+    "值域注册更新推送服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "syspd",
+   "name": "上药SPD系统",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "查询药品库存信息",
+    "查询药品入库信息"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "gxwd",
+   "name": "共享文档管理系统",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "交互服务-电子病历文档调阅服务",
+    "交互服务-电子病历文档检索服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "fxg",
+   "name": "泛血管平台",
+   "grants": 2,
+   "subs": 0,
+   "topServices": [
+    "医疗卫生人员信息查询服务",
+    "医疗卫生机构（科室）信息查询服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "dataPusher",
+   "name": "数据抽取用户",
+   "grants": 1,
+   "subs": 0,
+   "topServices": [
+    "各业务系统数据抽取到HIS"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "hlw",
+   "name": "互联网医院",
+   "grants": 1,
+   "subs": 0,
+   "topServices": [
+    "提供给互联网医院的服务"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "zhmb",
+   "name": "智慧慢病营养支持系统",
+   "grants": 1,
+   "subs": 0,
+   "topServices": [
+    "获取PACS检查报告"
+   ],
+   "subscribed": []
+  },
+  {
+   "id": "ecds",
+   "name": "电子票据系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "empi",
+   "name": "患者主索引系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "znyg",
+   "name": "智能药柜系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "q",
+   "name": "测试验证",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "zzjhxt",
+   "name": "重症监护系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "znyb",
+   "name": "智能医保系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "smxt",
+   "name": "手麻系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "dzpj",
+   "name": "电子票据系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "yuantu",
+   "name": "区域一卡通平台",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "xisofthrp",
+   "name": "预算管理系统",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": []
+  },
+  {
+   "id": "name::xt",
+   "name": "xt",
+   "grants": 0,
+   "subs": 0,
+   "topServices": [],
+   "subscribed": [],
+   "orphan": true
+  }
+ ],
+ "services": [
+  {
+   "id": "BIZ049",
+   "name": "医疗卫生机构（科室）信息查询服务",
+   "n": 29
+  },
+  {
+   "id": "BIZ048",
+   "name": "医疗卫生人员信息查询服务",
+   "n": 29
+  },
+  {
+   "id": "BIZ089",
+   "name": "通过key从Webdis获取VALUE,用于单点登录用户信息",
+   "n": 18
+  },
+  {
+   "id": "BIZ050",
+   "name": "主数据 - 值域",
+   "n": 17
+  },
+  {
+   "id": "BIZ04001",
+   "name": "获取PACS检查报告",
+   "n": 14
+  },
+  {
+   "id": "BIZ01022",
+   "name": "危急值上报服务",
+   "n": 12
+  },
+  {
+   "id": "BIZ067",
+   "name": "检验报告下明细服务",
+   "n": 11
+  },
+  {
+   "id": "BIZ066",
+   "name": "获取检验报告信息",
+   "n": 10
+  },
+  {
+   "id": "BIZ11001",
+   "name": "HIS发送消息到远图",
+   "n": 6
+  },
+  {
+   "id": "BIZ315",
+   "name": "诊间结算",
+   "n": 6
+  },
+  {
+   "id": "BIZ073",
+   "name": "EMPI患者更新",
+   "n": 5
+  },
+  {
+   "id": "BIZ075",
+   "name": "empi患者信息查询服务",
+   "n": 5
+  },
+  {
+   "id": "BIZ199",
+   "name": "发送统一登录信息",
+   "n": 4
+  },
+  {
+   "id": "BIZ072",
+   "name": "EMPI患者注册",
+   "n": 4
+  },
+  {
+   "id": "BIZ042",
+   "name": "推送企业微信消息",
+   "n": 4
+  },
+  {
+   "id": "BIZ052",
+   "name": "字典注册更新推送服务",
+   "n": 4
+  },
+  {
+   "id": "BIZ32001",
+   "name": "通用字典查询服务",
+   "n": 4
+  },
+  {
+   "id": "BIZ32002",
+   "name": "通用值域查询服务",
+   "n": 4
+  },
+  {
+   "id": "BIZ314",
+   "name": "获取住院患者信息",
+   "n": 4
+  },
+  {
+   "id": "PushOperationInfo",
+   "name": "手术申请信息新增服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ01023",
+   "name": "PACS危急值撤销服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ04002",
+   "name": "检查危急值反馈服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ05002",
+   "name": "自助机-获取患者检验报告PDF文件流",
+   "n": 3
+  },
+  {
+   "id": "ECG0001",
+   "name": "心电报告查询服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ17010",
+   "name": "患者挂号状态推送服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ01037",
+   "name": "HIS计费服务",
+   "n": 3
+  },
+  {
+   "id": "BIZ305",
+   "name": "保存门诊处方或诊断",
+   "n": 3
+  },
+  {
+   "id": "BIZ306",
+   "name": "删除门诊处方或诊断",
+   "n": 3
+  },
+  {
+   "id": "BIZ316",
+   "name": "诊间结算获取缴费金额",
+   "n": 3
+  },
+  {
+   "id": "SendDiagnoseDetail",
+   "name": "HIS发送诊断信息到公卫系统",
+   "n": 2
+  },
+  {
+   "id": "BIZ90007",
+   "name": "移动护理推送医嘱执行信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ01015",
+   "name": "检查申请信息查询服务",
+   "n": 2
+  },
+  {
+   "id": "BIZ01016",
+   "name": "检查申请信息更新服务",
+   "n": 2
+  },
+  {
+   "id": "BIZ90001",
+   "name": "HIS推送住院患者信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ90002",
+   "name": "HIS推送患者在科信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ90003",
+   "name": "HIS推送患者诊断信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ90004",
+   "name": "HIS推送患者换床信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ90005",
+   "name": "HIS推送患者出科信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ90006",
+   "name": "HIS推送患者医嘱信息",
+   "n": 2
+  },
+  {
+   "id": "BIZ01002",
+   "name": "心电申请单查询服务",
+   "n": 2
+  }
+ ],
+ "systemEdges": [
+  {
+   "source": "emr",
+   "target": "lis",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "oa",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "aes",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "peis",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ072",
+    "BIZ073"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "dtxd",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "mtl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ073",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "pass",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "pacs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "ecg",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "jzxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "oa",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "aes",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "peis",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "dtxd",
+   "weight": 4,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "mtl",
+   "weight": 5,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089",
+    "BIZ199"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "pass",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "pacs",
+   "weight": 4,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "ecg",
+   "weight": 4,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "jzxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ199"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "aes",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "peis",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "dtxd",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "mtl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "pass",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "pacs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "ecg",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "jzxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "peis",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "dtxd",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "mtl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "pass",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "pacs",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "ecg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "jzxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "cbcs",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "nds",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "pdjh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "xhzs",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "wlgl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "ZiChanGuanLi",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "btms",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "dtxd",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "mtl",
+   "weight": 9,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "pass",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "pacs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "ecg",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "jzxt",
+   "weight": 8,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "sm",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "pdjh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "wzh",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "xtxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "btms",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "zzjhxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "mtl",
+   "weight": 5,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "pass",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "pacs",
+   "weight": 6,
+   "via": [
+    "BIZ01022",
+    "BIZ01023",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "ecg",
+   "weight": 6,
+   "via": [
+    "BIZ01002",
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "jzxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "cbcs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "sm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "nds",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "pass",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "pacs",
+   "weight": 6,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089",
+    "BIZ314"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "ecg",
+   "weight": 5,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "jzxt",
+   "weight": 17,
+   "via": [
+    "BIZ04001",
+    "BIZ04002",
+    "BIZ042",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "cbcs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "sm",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "nds",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "pdjh",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089",
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "wzh",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ042",
+    "BIZ048",
+    "BIZ049",
+    "ECG0001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "xtxt",
+   "weight": 7,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067",
+    "BIZ32001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "btms",
+   "weight": 6,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "zzjhxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "pacs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "ecg",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "jzxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "sm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "pdjh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "ecg",
+   "weight": 5,
+   "via": [
+    "BIZ01022",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "jzxt",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ314"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "cbcs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "sm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "nds",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "jzxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "cbcs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "sm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "nds",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "cbcs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "sm",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "pdjh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "wzh",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ042",
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "xtxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "btms",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "zzjhxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "sm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "nds",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "nds",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "pdjh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "xtxt",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "btms",
+   "weight": 5,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "zzjhxt",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "pdjh",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "xhzs",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "xhzs",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "wlgl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "zlxt",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "zlxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "wlgl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "xtxt",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "ZiChanGuanLi",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "btms",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "zzjhxt",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "fxg",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "wlgl",
+   "weight": 4,
+   "via": [
+    "BIZ01037",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ01037",
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "wlgl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "ydhl",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "ZiChanGuanLi",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "btms",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "fxg",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "ydhl",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "gbgm",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "ZiChanGuanLi",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "btms",
+   "weight": 5,
+   "via": [
+    "BIZ01037",
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "gbgm",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ydhl",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "ZiChanGuanLi",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "gbgm",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "xtxt",
+   "target": "ZiChanGuanLi",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xtxt",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "xtxt",
+   "target": "zzjhxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "xtxt",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "xtxt",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "btms",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ050",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "btms",
+   "target": "zzjhxt",
+   "weight": 4,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "btms",
+   "target": "hics",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ049",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "btms",
+   "target": "wlhc",
+   "weight": 2,
+   "via": [
+    "BIZ049",
+    "BIZ050"
+   ]
+  },
+  {
+   "source": "zzjhxt",
+   "target": "hics",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "zzjhxt",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "hics",
+   "target": "wlhc",
+   "weight": 1,
+   "via": [
+    "BIZ049"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "emr",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "lis",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "oa",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "aes",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "peis",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "dtxd",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "mtl",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "pass",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "pacs",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "ecg",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "jzxt",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "cbcs",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "sm",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "nds",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "pdjh",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "xhzs",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "wzh",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "zlxt",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "fxg",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "wlgl",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "ydhl",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "gbgm",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "xtxt",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "ZiChanGuanLi",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "btms",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "zzjhxt",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "hics",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "aes",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "zhbf",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "zhbf",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ066",
+    "BIZ067",
+    "BIZ314"
+   ]
+  },
+  {
+   "source": "pass",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "zhbf",
+   "weight": 2,
+   "via": [
+    "BIZ048",
+    "BIZ314"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "zhbf",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ066",
+    "BIZ067",
+    "BIZ314"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "sm",
+   "target": "zhbf",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "zhbf",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "zlxt",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "fxg",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "wlgl",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "ydhl",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "gbgm",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "xtxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ052",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "ZiChanGuanLi",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "btms",
+   "weight": 3,
+   "via": [
+    "BIZ048",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "zzjhxt",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ048",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "hics",
+   "weight": 1,
+   "via": [
+    "BIZ048"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "kdhis",
+   "weight": 3,
+   "via": [
+    "BIZ072",
+    "BIZ073",
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "oa",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "kdhis",
+   "weight": 6,
+   "via": [
+    "BIZ04001",
+    "BIZ073",
+    "BIZ089",
+    "BIZ11001",
+    "BIZ32001",
+    "BIZ32002"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "cbcs",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "nds",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "pdjh",
+   "target": "kdhis",
+   "weight": 2,
+   "via": [
+    "BIZ089",
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "xhzs",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "zlxt",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "wlgl",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "ydhl",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "ZiChanGuanLi",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "btms",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "hics",
+   "weight": 1,
+   "via": [
+    "BIZ089"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "name::xt",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "peis",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ067",
+    "BIZ072",
+    "BIZ073"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "mtl",
+   "weight": 8,
+   "via": [
+    "BIZ04001",
+    "BIZ04002",
+    "BIZ067",
+    "BIZ073",
+    "BIZ199",
+    "ECG0001"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "hxzzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "jzxt",
+   "weight": 5,
+   "via": [
+    "BIZ04001",
+    "BIZ04002",
+    "BIZ067",
+    "BIZ199",
+    "PushOperationInfo"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "wzh",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "ECG0001"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "zhbf",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "kdhis",
+   "weight": 9,
+   "via": [
+    "BIZ04001",
+    "BIZ072",
+    "BIZ073",
+    "BIZ90001",
+    "BIZ90002",
+    "BIZ90003"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "zzj",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ05002"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "peis",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ066",
+    "BIZ067",
+    "BIZ075"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "mtl",
+   "weight": 6,
+   "via": [
+    "BIZ04001",
+    "BIZ066",
+    "BIZ067",
+    "BIZ075",
+    "BIZ32001",
+    "BIZ32002"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "hxzzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "jzxt",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ066",
+    "BIZ067",
+    "BIZ075"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "wzh",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "zhbf",
+   "weight": 4,
+   "via": [
+    "BIZ04001",
+    "BIZ052",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "kdhis",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ32001",
+    "BIZ32002"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "xtxt",
+   "weight": 6,
+   "via": [
+    "BIZ04001",
+    "BIZ052",
+    "BIZ066",
+    "BIZ067",
+    "BIZ32001",
+    "BIZ32002"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "zzjhxt",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "hxzzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "kdhis",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ072",
+    "BIZ073"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "hxzzj",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "jzxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "wzh",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "kdhis",
+   "weight": 2,
+   "via": [
+    "BIZ04001",
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "xtxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "zzjhxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "zhmb",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhmb",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhmb",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhmb",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhmb",
+   "target": "xtxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhmb",
+   "target": "zzjhxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zhbf",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "xtxt",
+   "weight": 3,
+   "via": [
+    "BIZ04001",
+    "BIZ32001",
+    "BIZ32002"
+   ]
+  },
+  {
+   "source": "kdhis",
+   "target": "zzjhxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zzj",
+   "target": "xtxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "zzj",
+   "target": "zzjhxt",
+   "weight": 1,
+   "via": [
+    "BIZ04001"
+   ]
+  },
+  {
+   "source": "lis",
+   "target": "blxt",
+   "weight": 1,
+   "via": [
+    "BIZ01022"
+   ]
+  },
+  {
+   "source": "dtxd",
+   "target": "blxt",
+   "weight": 2,
+   "via": [
+    "BIZ01022",
+    "BIZ01023"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "blxt",
+   "weight": 1,
+   "via": [
+    "BIZ01022"
+   ]
+  },
+  {
+   "source": "pacs",
+   "target": "blxt",
+   "weight": 4,
+   "via": [
+    "BIZ01015",
+    "BIZ01016",
+    "BIZ01022",
+    "BIZ01023"
+   ]
+  },
+  {
+   "source": "ecg",
+   "target": "blxt",
+   "weight": 1,
+   "via": [
+    "BIZ01022"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "hishttp",
+   "weight": 1,
+   "via": [
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "sm",
+   "weight": 1,
+   "via": [
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "btms",
+   "weight": 1,
+   "via": [
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "name::xt",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "peis",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "mtl",
+   "weight": 3,
+   "via": [
+    "BIZ066",
+    "BIZ067",
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "jzxt",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "zhbf",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "xtxt",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "btms",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "zzjhxt",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "sm",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "btms",
+   "weight": 2,
+   "via": [
+    "BIZ066",
+    "BIZ067"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "hxzzj",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "jjk",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "pdjh",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hishttp",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "jjk",
+   "weight": 6,
+   "via": [
+    "BIZ075",
+    "BIZ11001",
+    "BIZ305",
+    "BIZ306",
+    "BIZ315",
+    "BIZ316"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "jjk",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "hxzzj",
+   "target": "pdjh",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "jjk",
+   "target": "pdjh",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "jjk",
+   "target": "kdhis",
+   "weight": 1,
+   "via": [
+    "BIZ11001"
+   ]
+  },
+  {
+   "source": "jjk",
+   "target": "jzxt",
+   "weight": 5,
+   "via": [
+    "BIZ075",
+    "BIZ305",
+    "BIZ306",
+    "BIZ315",
+    "BIZ316"
+   ]
+  },
+  {
+   "source": "emr",
+   "target": "his",
+   "weight": 2,
+   "via": [
+    "BIZ072",
+    "BIZ073"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "jjk",
+   "weight": 1,
+   "via": [
+    "BIZ075"
+   ]
+  },
+  {
+   "source": "peis",
+   "target": "jjk",
+   "weight": 1,
+   "via": [
+    "BIZ075"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "lis",
+   "weight": 1,
+   "via": [
+    "BIZ199"
+   ]
+  },
+  {
+   "source": "mtl",
+   "target": "hip-monitor",
+   "weight": 1,
+   "via": [
+    "BIZ042"
+   ]
+  },
+  {
+   "source": "jzxt",
+   "target": "hip-monitor",
+   "weight": 1,
+   "via": [
+    "BIZ042"
+   ]
+  },
+  {
+   "source": "wzh",
+   "target": "hip-monitor",
+   "weight": 1,
+   "via": [
+    "BIZ042"
+   ]
+  },
+  {
+   "source": "name::xt",
+   "target": "nmdm",
+   "weight": 1,
+   "via": [
+    "BIZ052"
+   ]
+  },
+  {
+   "source": "nmdm",
+   "target": "zhbf",
+   "weight": 1,
+   "via": [
+    "BIZ052"
+   ]
+  },
+  {
+   "source": "nmdm",
+   "target": "xtxt",
+   "weight": 1,
+   "via": [
+    "BIZ052"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "his",
+   "weight": 1,
+   "via": [
+    "BIZ05002"
+   ]
+  },
+  {
+   "source": "hmps",
+   "target": "zzj",
+   "weight": 1,
+   "via": [
+    "BIZ05002"
+   ]
+  },
+  {
+   "source": "his",
+   "target": "ydhl",
+   "weight": 1,
+   "via": [
+    "BIZ90007"
+   ]
+  }
+ ],
+ "serviceEdges": [
+  {
+   "source": "emr",
+   "target": "BIZ049"
+  },
+  {
+   "source": "lis",
+   "target": "BIZ049"
+  },
+  {
+   "source": "oa",
+   "target": "BIZ049"
+  },
+  {
+   "source": "aes",
+   "target": "BIZ049"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ049"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ049"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ049"
+  },
+  {
+   "source": "pass",
+   "target": "BIZ049"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ049"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ049"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ049"
+  },
+  {
+   "source": "cbcs",
+   "target": "BIZ049"
+  },
+  {
+   "source": "sm",
+   "target": "BIZ049"
+  },
+  {
+   "source": "nds",
+   "target": "BIZ049"
+  },
+  {
+   "source": "pdjh",
+   "target": "BIZ049"
+  },
+  {
+   "source": "xhzs",
+   "target": "BIZ049"
+  },
+  {
+   "source": "wzh",
+   "target": "BIZ049"
+  },
+  {
+   "source": "zlxt",
+   "target": "BIZ049"
+  },
+  {
+   "source": "fxg",
+   "target": "BIZ049"
+  },
+  {
+   "source": "wlgl",
+   "target": "BIZ049"
+  },
+  {
+   "source": "ydhl",
+   "target": "BIZ049"
+  },
+  {
+   "source": "gbgm",
+   "target": "BIZ049"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ049"
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "BIZ049"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ049"
+  },
+  {
+   "source": "zzjhxt",
+   "target": "BIZ049"
+  },
+  {
+   "source": "hics",
+   "target": "BIZ049"
+  },
+  {
+   "source": "wlhc",
+   "target": "BIZ049"
+  },
+  {
+   "source": "hmps",
+   "target": "BIZ048"
+  },
+  {
+   "source": "emr",
+   "target": "BIZ048"
+  },
+  {
+   "source": "lis",
+   "target": "BIZ048"
+  },
+  {
+   "source": "oa",
+   "target": "BIZ048"
+  },
+  {
+   "source": "aes",
+   "target": "BIZ048"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ048"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ048"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ048"
+  },
+  {
+   "source": "pass",
+   "target": "BIZ048"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ048"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ048"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ048"
+  },
+  {
+   "source": "cbcs",
+   "target": "BIZ048"
+  },
+  {
+   "source": "sm",
+   "target": "BIZ048"
+  },
+  {
+   "source": "nds",
+   "target": "BIZ048"
+  },
+  {
+   "source": "pdjh",
+   "target": "BIZ048"
+  },
+  {
+   "source": "xhzs",
+   "target": "BIZ048"
+  },
+  {
+   "source": "wzh",
+   "target": "BIZ048"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ048"
+  },
+  {
+   "source": "zlxt",
+   "target": "BIZ048"
+  },
+  {
+   "source": "fxg",
+   "target": "BIZ048"
+  },
+  {
+   "source": "wlgl",
+   "target": "BIZ048"
+  },
+  {
+   "source": "ydhl",
+   "target": "BIZ048"
+  },
+  {
+   "source": "gbgm",
+   "target": "BIZ048"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ048"
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "BIZ048"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ048"
+  },
+  {
+   "source": "zzjhxt",
+   "target": "BIZ048"
+  },
+  {
+   "source": "hics",
+   "target": "BIZ048"
+  },
+  {
+   "source": "emr",
+   "target": "BIZ089"
+  },
+  {
+   "source": "lis",
+   "target": "BIZ089"
+  },
+  {
+   "source": "oa",
+   "target": "BIZ089"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ089"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ089"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ089"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ089"
+  },
+  {
+   "source": "cbcs",
+   "target": "BIZ089"
+  },
+  {
+   "source": "nds",
+   "target": "BIZ089"
+  },
+  {
+   "source": "pdjh",
+   "target": "BIZ089"
+  },
+  {
+   "source": "xhzs",
+   "target": "BIZ089"
+  },
+  {
+   "source": "zlxt",
+   "target": "BIZ089"
+  },
+  {
+   "source": "wlgl",
+   "target": "BIZ089"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ089"
+  },
+  {
+   "source": "ydhl",
+   "target": "BIZ089"
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "BIZ089"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ089"
+  },
+  {
+   "source": "hics",
+   "target": "BIZ089"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ050"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ050"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ050"
+  },
+  {
+   "source": "pass",
+   "target": "BIZ050"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ050"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ050"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ050"
+  },
+  {
+   "source": "cbcs",
+   "target": "BIZ050"
+  },
+  {
+   "source": "sm",
+   "target": "BIZ050"
+  },
+  {
+   "source": "nds",
+   "target": "BIZ050"
+  },
+  {
+   "source": "xhzs",
+   "target": "BIZ050"
+  },
+  {
+   "source": "wlgl",
+   "target": "BIZ050"
+  },
+  {
+   "source": "gbgm",
+   "target": "BIZ050"
+  },
+  {
+   "source": "ZiChanGuanLi",
+   "target": "BIZ050"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ050"
+  },
+  {
+   "source": "wlhc",
+   "target": "BIZ050"
+  },
+  {
+   "source": "his",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "hxzzj",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "wzh",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "zhmb",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "zzj",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "zzjhxt",
+   "target": "BIZ04001"
+  },
+  {
+   "source": "lis",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "blxt",
+   "target": "BIZ01022"
+  },
+  {
+   "source": "his",
+   "target": "BIZ067"
+  },
+  {
+   "source": "hishttp",
+   "target": "BIZ067"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ067"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ067"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ067"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ067"
+  },
+  {
+   "source": "sm",
+   "target": "BIZ067"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ067"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ067"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ067"
+  },
+  {
+   "source": "zzjhxt",
+   "target": "BIZ067"
+  },
+  {
+   "source": "hishttp",
+   "target": "BIZ066"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ066"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ066"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ066"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ066"
+  },
+  {
+   "source": "sm",
+   "target": "BIZ066"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ066"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ066"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ066"
+  },
+  {
+   "source": "zzjhxt",
+   "target": "BIZ066"
+  },
+  {
+   "source": "hishttp",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "hxzzj",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "pdjh",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ11001"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ315"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ315"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ315"
+  },
+  {
+   "source": "emr",
+   "target": "BIZ073"
+  },
+  {
+   "source": "his",
+   "target": "BIZ073"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ073"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ073"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ073"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ075"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ075"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ075"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ075"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ075"
+  },
+  {
+   "source": "his",
+   "target": "BIZ199"
+  },
+  {
+   "source": "lis",
+   "target": "BIZ199"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ199"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ199"
+  },
+  {
+   "source": "emr",
+   "target": "BIZ072"
+  },
+  {
+   "source": "his",
+   "target": "BIZ072"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ072"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ072"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ042"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ042"
+  },
+  {
+   "source": "wzh",
+   "target": "BIZ042"
+  },
+  {
+   "source": "hip-monitor",
+   "target": "BIZ042"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ052"
+  },
+  {
+   "source": "nmdm",
+   "target": "BIZ052"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ052"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ052"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ32001"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ32001"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ32001"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ32001"
+  },
+  {
+   "source": "name::xt",
+   "target": "BIZ32002"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ32002"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ32002"
+  },
+  {
+   "source": "xtxt",
+   "target": "BIZ32002"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ314"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ314"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ314"
+  },
+  {
+   "source": "zhbf",
+   "target": "BIZ314"
+  },
+  {
+   "source": "his",
+   "target": "PushOperationInfo"
+  },
+  {
+   "source": "mtl",
+   "target": "PushOperationInfo"
+  },
+  {
+   "source": "jzxt",
+   "target": "PushOperationInfo"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ01023"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ01023"
+  },
+  {
+   "source": "blxt",
+   "target": "BIZ01023"
+  },
+  {
+   "source": "his",
+   "target": "BIZ04002"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ04002"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ04002"
+  },
+  {
+   "source": "hmps",
+   "target": "BIZ05002"
+  },
+  {
+   "source": "his",
+   "target": "BIZ05002"
+  },
+  {
+   "source": "zzj",
+   "target": "BIZ05002"
+  },
+  {
+   "source": "his",
+   "target": "ECG0001"
+  },
+  {
+   "source": "mtl",
+   "target": "ECG0001"
+  },
+  {
+   "source": "wzh",
+   "target": "ECG0001"
+  },
+  {
+   "source": "peis",
+   "target": "BIZ17010"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ17010"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ17010"
+  },
+  {
+   "source": "zlxt",
+   "target": "BIZ01037"
+  },
+  {
+   "source": "wlgl",
+   "target": "BIZ01037"
+  },
+  {
+   "source": "btms",
+   "target": "BIZ01037"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ305"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ305"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ305"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ306"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ306"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ306"
+  },
+  {
+   "source": "mtl",
+   "target": "BIZ316"
+  },
+  {
+   "source": "jjk",
+   "target": "BIZ316"
+  },
+  {
+   "source": "jzxt",
+   "target": "BIZ316"
+  },
+  {
+   "source": "his",
+   "target": "SendDiagnoseDetail"
+  },
+  {
+   "source": "mtl",
+   "target": "SendDiagnoseDetail"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90007"
+  },
+  {
+   "source": "ydhl",
+   "target": "BIZ90007"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ01015"
+  },
+  {
+   "source": "blxt",
+   "target": "BIZ01015"
+  },
+  {
+   "source": "pacs",
+   "target": "BIZ01016"
+  },
+  {
+   "source": "blxt",
+   "target": "BIZ01016"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90001"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90001"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90002"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90002"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90003"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90003"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90004"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90004"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90005"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90005"
+  },
+  {
+   "source": "his",
+   "target": "BIZ90006"
+  },
+  {
+   "source": "kdhis",
+   "target": "BIZ90006"
+  },
+  {
+   "source": "dtxd",
+   "target": "BIZ01002"
+  },
+  {
+   "source": "ecg",
+   "target": "BIZ01002"
+  }
+ ],
+ "domains": [
+  {
+   "id": "03.000 交互服务",
+   "routes": 66,
+   "filters": 0,
+   "components": 0,
+   "targets": 0
+  },
+  {
+   "id": "03.09 KDHIS",
+   "routes": 15,
+   "filters": 145,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.01 HIS业务",
+   "routes": 13,
+   "filters": 185,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "03.06 MDM主数据业务",
+   "routes": 10,
+   "filters": 109,
+   "components": 20,
+   "targets": 2
+  },
+  {
+   "id": "05. 通用路由",
+   "routes": 5,
+   "filters": 26,
+   "components": 20,
+   "targets": 8
+  },
+  {
+   "id": "02.17 青岛市核酸上报",
+   "routes": 4,
+   "filters": 40,
+   "components": 20,
+   "targets": 2
+  },
+  {
+   "id": "02.03 手麻",
+   "routes": 3,
+   "filters": 43,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "02.02 CommonWebService",
+   "routes": 3,
+   "filters": 36,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "02.05 KedauisAPPs",
+   "routes": 3,
+   "filters": 51,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.11 LIS业务",
+   "routes": 3,
+   "filters": 39,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "03.05 公共业务",
+   "routes": 3,
+   "filters": 60,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "03.29 DRGS业务",
+   "routes": 2,
+   "filters": 8,
+   "components": 7,
+   "targets": 1
+  },
+  {
+   "id": "02.20 KDHIS",
+   "routes": 2,
+   "filters": 27,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "02.01 HIS",
+   "routes": 2,
+   "filters": 32,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.12 PACS业务",
+   "routes": 2,
+   "filters": 22,
+   "components": 20,
+   "targets": 1
+  },
+  {
+   "id": "02.08 曼荼罗",
+   "routes": 2,
+   "filters": 47,
+   "components": 20,
+   "targets": 5
+  },
+  {
+   "id": "03.08 EMR业务",
+   "routes": 2,
+   "filters": 15,
+   "components": 14,
+   "targets": 3
+  },
+  {
+   "id": "03.04 ICU业务",
+   "routes": 2,
+   "filters": 45,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "02.13 材料管理(物流)系统",
+   "routes": 2,
+   "filters": 16,
+   "components": 15,
+   "targets": 3
+  },
+  {
+   "id": "03.38 上药SPD业务",
+   "routes": 2,
+   "filters": 7,
+   "components": 7,
+   "targets": 2
+  },
+  {
+   "id": "02.09 LIS",
+   "routes": 2,
+   "filters": 30,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "02.07 PACS",
+   "routes": 2,
+   "filters": 36,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "02.28 医技预约系统",
+   "routes": 2,
+   "filters": 9,
+   "components": 8,
+   "targets": 0
+  },
+  {
+   "id": "03.36 华信自助机",
+   "routes": 2,
+   "filters": 3,
+   "components": 3,
+   "targets": 1
+  },
+  {
+   "id": "03.00 KedauisAPPs出口",
+   "routes": 2,
+   "filters": 12,
+   "components": 10,
+   "targets": 5
+  },
+  {
+   "id": "03.13 心电业务",
+   "routes": 2,
+   "filters": 17,
+   "components": 17,
+   "targets": 3
+  },
+  {
+   "id": "03.26 智能药柜",
+   "routes": 2,
+   "filters": 20,
+   "components": 20,
+   "targets": 5
+  },
+  {
+   "id": "03.00 推送业务",
+   "routes": 2,
+   "filters": 14,
+   "components": 12,
+   "targets": 3
+  },
+  {
+   "id": "03.44 急诊系统",
+   "routes": 2,
+   "filters": 26,
+   "components": 20,
+   "targets": 1
+  },
+  {
+   "id": "02.11 交互服务",
+   "routes": 2,
+   "filters": 35,
+   "components": 20,
+   "targets": 2
+  },
+  {
+   "id": "02.00 CommonHttpServer",
+   "routes": 2,
+   "filters": 51,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.14 自助机业务",
+   "routes": 2,
+   "filters": 21,
+   "components": 19,
+   "targets": 2
+  },
+  {
+   "id": "03.03 手麻业务",
+   "routes": 2,
+   "filters": 13,
+   "components": 9,
+   "targets": 2
+  },
+  {
+   "id": "03.15 输血业务",
+   "routes": 2,
+   "filters": 33,
+   "components": 20,
+   "targets": 2
+  },
+  {
+   "id": "02.27 急诊系统",
+   "routes": 2,
+   "filters": 44,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.34 曼荼罗HIS",
+   "routes": 2,
+   "filters": 24,
+   "components": 20,
+   "targets": 1
+  },
+  {
+   "id": "02.04 ICU",
+   "routes": 2,
+   "filters": 19,
+   "components": 18,
+   "targets": 4
+  },
+  {
+   "id": "03.09 移动护理业务",
+   "routes": 2,
+   "filters": 8,
+   "components": 7,
+   "targets": 4
+  },
+  {
+   "id": "03.23 体检业务",
+   "routes": 2,
+   "filters": 28,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.30 PublicHttpClient",
+   "routes": 2,
+   "filters": 24,
+   "components": 20,
+   "targets": 3
+  },
+  {
+   "id": "03.10 EMPI服务",
+   "routes": 2,
+   "filters": 23,
+   "components": 20,
+   "targets": 4
+  },
+  {
+   "id": "03.22 电子票据",
+   "routes": 2,
+   "filters": 10,
+   "components": 8,
+   "targets": 2
+  },
+  {
+   "id": "03.43 医技预约",
+   "routes": 2,
+   "filters": 18,
+   "components": 16,
+   "targets": 1
+  },
+  {
+   "id": "03.02 公卫业务",
+   "routes": 2,
+   "filters": 41,
+   "components": 20,
+   "targets": 6
+  },
+  {
+   "id": "02.10 自助机",
+   "routes": 2,
+   "filters": 14,
+   "components": 12,
+   "targets": 3
+  },
+  {
+   "id": "02.25 血透系统",
+   "routes": 1,
+   "filters": 3,
+   "components": 3,
+   "targets": 0
+  },
+  {
+   "id": "03.17 远图业务",
+   "routes": 1,
+   "filters": 10,
+   "components": 10,
+   "targets": 2
+  },
+  {
+   "id": "03.16 智能医保",
+   "routes": 1,
+   "filters": 5,
+   "components": 4,
+   "targets": 2
+  },
+  {
+   "id": "02.14 新华追溯系统",
+   "routes": 1,
+   "filters": 4,
+   "components": 4,
+   "targets": 0
+  },
+  {
+   "id": "03.27 心理CT",
+   "routes": 1,
+   "filters": 3,
+   "components": 3,
+   "targets": 1
+  },
+  {
+   "id": "03.25 消息中心",
+   "routes": 1,
+   "filters": 13,
+   "components": 13,
+   "targets": 2
+  },
+  {
+   "id": "03.40 血透系统",
+   "routes": 1,
+   "filters": 3,
+   "components": 3,
+   "targets": 1
+  },
+  {
+   "id": "02.26 佳家康",
+   "routes": 1,
+   "filters": 5,
+   "components": 5,
+   "targets": 0
+  },
+  {
+   "id": "03.07 移动查房业务",
+   "routes": 1,
+   "filters": 3,
+   "components": 3,
+   "targets": 2
+  },
+  {
+   "id": "02.22 排队叫号",
+   "routes": 1,
+   "filters": 6,
+   "components": 6,
+   "targets": 1
+  },
+  {
+   "id": "02.16 互联网医院",
+   "routes": 1,
+   "filters": 9,
+   "components": 9,
+   "targets": 2
+  },
+  {
+   "id": "02.24 上药SPD",
+   "routes": 1,
+   "filters": 1,
+   "components": 1,
+   "targets": 0
+  },
+  {
+   "id": "03.20 市医保",
+   "routes": 1,
+   "filters": 3,
+   "components": 3,
+   "targets": 2
+  },
+  {
+   "id": "03.39 治疗系统",
+   "routes": 1,
+   "filters": 15,
+   "components": 15,
+   "targets": 0
+  },
+  {
+   "id": "03.31 护理总动员",
+   "routes": 1,
+   "filters": 2,
+   "components": 2,
+   "targets": 1
+  },
+  {
+   "id": "02.21 华信自助机",
+   "routes": 1,
+   "filters": 6,
+   "components": 6,
+   "targets": 0
+  },
+  {
+   "id": "03.42 医疗质量安全核心制度",
+   "routes": 1,
+   "filters": 2,
+   "components": 2,
+   "targets": 2
+  },
+  {
+   "id": "03.24 新华追溯系统",
+   "routes": 1,
+   "filters": 5,
+   "components": 5,
+   "targets": 1
+  },
+  {
+   "id": "02.12 智能药柜系统",
+   "routes": 1,
+   "filters": 7,
+   "components": 7,
+   "targets": 1
+  },
+  {
+   "id": "02.15 青岛市智慧妇幼",
+   "routes": 1,
+   "filters": 4,
+   "components": 4,
+   "targets": 0
+  },
+  {
+   "id": "03.35 CDR数据中心",
+   "routes": 1,
+   "filters": 6,
+   "components": 5,
+   "targets": 2
+  },
+  {
+   "id": "02.19 远途",
+   "routes": 1,
+   "filters": 12,
+   "components": 12,
+   "targets": 1
+  },
+  {
+   "id": "03.28 保健平台",
+   "routes": 1,
+   "filters": 12,
+   "components": 12,
+   "targets": 3
+  },
+  {
+   "id": "03.41 智慧病房系统",
+   "routes": 1,
+   "filters": 5,
+   "components": 5,
+   "targets": 0
+  }
+ ],
+ "ports": [
+  {
+   "id": "78626499-a263-4191-a3da-2fd40b43b8f6",
+   "name": "InteractionService",
+   "port": "6005",
+   "desc": "交互服务Web服务",
+   "ops": 1
+  },
+  {
+   "id": "0672eca8-30bb-4d93-9c86-d5fbdf4ecfa2",
+   "name": "KedauisServiceForGW",
+   "port": "6064",
+   "desc": "集成平台提供的webservice, 供公共WebService使用",
+   "ops": 76
+  },
+  {
+   "id": "bb504a9d-5e59-46b7-85d9-1c3b8c47b3b7",
+   "name": "KedauisServiceForHICS",
+   "port": "6066",
+   "desc": "集成平台入口webservice 仅供院感使用",
+   "ops": 1
+  },
+  {
+   "id": "54285ebd-eda4-43d8-9d98-d0dd8d9e3722",
+   "name": "KedauisServiceForHIS",
+   "port": "6061",
+   "desc": "集成平台入口webservice 仅供HIS使用",
+   "ops": 1
+  },
+  {
+   "id": "ca67e200-7c5f-41d7-9c5e-ed264280e992",
+   "name": "KedauisServiceForHLW",
+   "port": "6071",
+   "desc": "集成平台入口WebService 仅供互联网医院使用",
+   "ops": 1
+  },
+  {
+   "id": "0f123980-a888-4273-92ab-61294e56cfb2",
+   "name": "KedauisServiceForJH",
+   "port": "6065",
+   "desc": "集成平台入口webservice 仅供嘉禾美康(手麻、重症)使用",
+   "ops": 1
+  },
+  {
+   "id": "32ebd598-0230-43d0-badd-b500f0c4af86",
+   "name": "KedauisServiceForLIS",
+   "port": "6069",
+   "desc": "集成平台入口webservice 仅供LIS使用",
+   "ops": 1
+  },
+  {
+   "id": "01fc6a4f-43cf-4a14-8ce8-71abafa8c46d",
+   "name": "KedauisServiceForMTL",
+   "port": "6068",
+   "desc": "集成平台入口webservice 仅供曼荼罗使用",
+   "ops": 1
+  },
+  {
+   "id": "188f7025-faf3-408a-87d3-8ee6132337b4",
+   "name": "KedauisServiceForPACS",
+   "port": "6067",
+   "desc": "集成平台入口webservice 仅供PACS使用",
+   "ops": 1
+  },
+  {
+   "id": "3e24d90f-d07c-48ac-96a4-c2c108ca9419",
+   "name": "KedauisServiceForSM",
+   "port": "6063",
+   "desc": "集成平台入口webservice 仅供手麻使用",
+   "ops": 1
+  },
+  {
+   "id": "1041f51d-e967-4ddb-bb78-4700dfcba393",
+   "name": "KedauisServiceForZZJ",
+   "port": "6070",
+   "desc": "集成平台入口webservice 仅供自助机使用",
+   "ops": 1
+  }
+ ],
+ "bslist": [
+  {
+   "code": "EMR",
+   "name": "电子病历系统",
+   "category": "医疗业务",
+   "componentCount": 3
+  },
+  {
+   "code": "HIP",
+   "name": "集成平台（Orion Health Rhapsody）",
+   "category": "集成平台",
+   "componentCount": 487
+  },
+  {
+   "code": "HIP-aes",
+   "name": "不良事件系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-blxt",
+   "name": "病理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-btms",
+   "name": "输血系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-cbcs",
+   "name": "成本核算系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-dataPusher",
+   "name": "数据抽取用户",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-drgs",
+   "name": "Drgs",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-dtxd",
+   "name": "动态心电系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-dzpj",
+   "name": "电子票据系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-ecds",
+   "name": "电子票据系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-ecg",
+   "name": "心电系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-empi",
+   "name": "患者主索引系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-fxg",
+   "name": "泛血管平台",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-gbgm",
+   "name": "血糖监测系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-gw",
+   "name": "公共卫生系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-gxwd",
+   "name": "共享文档管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hics",
+   "name": "院感系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hip-monitor",
+   "name": "集成平台监控系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hishttp",
+   "name": "HIS系统(Http)",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hlw",
+   "name": "互联网医院",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hmbm",
+   "name": "惠民便民平台",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hmps",
+   "name": "360全景视图",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hr",
+   "name": "人事系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-hxzzj",
+   "name": "华信自助机",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-icu",
+   "name": "重症监护系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-jjk",
+   "name": "家佳康",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-jzxt",
+   "name": "急诊系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-kdhis",
+   "name": "科大HIS",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-mtl",
+   "name": "医生站",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-nds",
+   "name": "护理总动员系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-nmdm",
+   "name": "主数据管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-oa",
+   "name": "OA管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-pass",
+   "name": "合理用药",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-pdjh",
+   "name": "排队叫号系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-peis",
+   "name": "体检系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-q",
+   "name": "测试验证",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-sm",
+   "name": "手术麻醉系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-smxt",
+   "name": "手麻系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-syspd",
+   "name": "上药SPD系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-wlgl",
+   "name": "物流管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-wlhc",
+   "name": "韦乐海茨智能药柜系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-wzh",
+   "name": "无纸化系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-xhzs",
+   "name": "新华追溯系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-xisofthrp",
+   "name": "预算管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-xlct",
+   "name": "心理CT系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-xtxt",
+   "name": "血透系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-ydhl",
+   "name": "移动护理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-yjyy",
+   "name": "医技预约系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-yuantu",
+   "name": "区域一卡通平台",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-zhbf",
+   "name": "智慧病房系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-zhmb",
+   "name": "智慧慢病营养支持系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-ZiChanGuanLi",
+   "name": "资产管理系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-zlxt",
+   "name": "治疗系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-znyb",
+   "name": "智能医保系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-znyg",
+   "name": "智能药柜系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-zzj",
+   "name": "自助机",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIP-zzjhxt",
+   "name": "重症监护系统",
+   "category": "集成平台接入系统",
+   "componentCount": 0
+  },
+  {
+   "code": "HIS",
+   "name": "HIS医院信息系统",
+   "category": "HIS",
+   "componentCount": 4
+  },
+  {
+   "code": "LIS",
+   "name": "检验信息系统",
+   "category": "医疗业务",
+   "componentCount": 3
+  },
+  {
+   "code": "PACS",
+   "name": "影像归档与通信系统",
+   "category": "医疗业务",
+   "componentCount": 3
+  }
+ ]
+}

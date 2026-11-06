@@ -1,0 +1,1 @@
+import{t as e}from"./client-B6vt1a6v.js";function t(){return e.get(`/topology/network`)}function n(){return e.get(`/topology/virtualization`)}function r(){return e.post(`/topology/rebuild`)}function i(){return e.get(`/business-systems`)}function a(t){return e.get(`/business-systems/${t}/topology`)}export{r as a,n as i,a as n,t as r,i as t};

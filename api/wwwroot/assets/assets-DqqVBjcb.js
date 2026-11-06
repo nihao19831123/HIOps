@@ -1,0 +1,1 @@
+import{t as e}from"./client--T_WxcHq.js";function t(t){return e.get(`/assets`,{params:t})}function n(t){return e.get(`/assets/${t}`)}function r(){return e.get(`/assets/summary`)}function i(t,n){return e.post(`/assets/merge`,{keepId:t,mergeId:n})}export{i,r as n,t as r,n as t};
