@@ -48,11 +48,12 @@ UPSTREAM = "http://127.0.0.1:5083"
 def resolve_business_system(win_title, proc_name):
     combined = f"{win_title or ''} {proc_name or ''}".lower()
     rules = [
-        (r"his|门诊|住院|医生站|挂号|收费|处方|医嘱|护士站", "HIS", "门诊住院HIS系统"),
+        (r"emg|急诊|分诊|抢救|留观|绿通", "EMG", "急诊临床信息系统"),
         (r"pacs|dcm|影像|放射|超声|ct|mri|dicom", "PACS", "医学影像PACS系统"),
         (r"emr|病历|病程|病案", "EMR", "电子病历系统"),
         (r"lis|检验|标本|化验|血常规|生化", "LIS", "检验信息系统"),
-        (r"yb|医保|结算|统筹|自费", "YB", "医保结算系统")
+        (r"yb|医保|结算|统筹|自费", "YB", "医保结算系统"),
+        (r"his|门诊|住院|医生站|挂号|收费|处方|医嘱|护士站", "HIS", "门诊住院HIS系统")
     ]
     for pattern, code, name in rules:
         if re.search(pattern, combined, re.IGNORECASE):
