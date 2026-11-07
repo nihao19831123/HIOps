@@ -341,10 +341,12 @@ class GatewayHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     from http.server import ThreadingHTTPServer
+    ThreadingHTTPServer.allow_reuse_address = True
     server = ThreadingHTTPServer(('0.0.0.0', 5080), GatewayHandler)
     print("HIOps Transparent Gateway V2.1 listening on 0.0.0.0:5080 -> 127.0.0.1:5083", flush=True)
     server.serve_forever()
 PYEOF
+
 
 chmod +x /opt/hiops/forensic_gateway.py
 
