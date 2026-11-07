@@ -45,6 +45,10 @@ import re
 
 UPSTREAM = "http://127.0.0.1:5083"
 
+def pg_esc(s):
+    return (str(s) if s is not None else '').replace("'", "''")
+
+
 def resolve_business_system(win_title, proc_name):
     combined = f"{win_title or ''} {proc_name or ''}".lower()
     rules = [
@@ -143,7 +147,7 @@ def perform_rca_and_playbook(host, ip, trigger, win_title, proc_name, ocr_error,
         ]
 
     summary_text = "\n".join(evidence) + "\n\n" + "\n".join(playbook)
-    return root_cause, confidence, severity, impact, summary_text, category, biz_code
+    return root_cause, confidence, severity, impact, summary_text, category, biz_code, biz_name
 
 def query_7b_model(biz_code, biz_name, root_cause, ocr_error, proc_name):
     import time
@@ -158,13 +162,15 @@ def query_7b_model(biz_code, biz_name, root_cause, ocr_error, proc_name):
         }
         data_bytes = json.dumps(payload).encode('utf-8')
         req = urllib.request.Request(endpoint, data=data_bytes, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        print(f"[AI CALL START] 向 192.168.2.19 发送大模型推理请求...", flush=True)
+        with urllib.request.urlopen(req, timeout=30) as resp:
             resp_json = json.loads(resp.read().decode('utf-8'))
             ai_text = resp_json['choices'][0]['message']['content'].strip()
             latency = int((time.time() - t0) * 1000)
+            print(f"[AI CALL SUCCESS] 192.168.2.19 大模型推理成功！耗时: {latency}ms", flush=True)
             return ai_text, latency, user_prompt, json.dumps(resp_json, ensure_ascii=False)
     except Exception as e:
-        print(f"[7B MODEL INFERENCE SKIPPED/FAILED] {e}", flush=True)
+        print(f"[7B MODEL CALL FAILED] {e}", flush=True)
         return None, 0, None, None
 
 def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, action_trail, net_probes, fingerprint):
@@ -173,7 +179,7 @@ def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, 
     rel_id = str(uuid.uuid4())
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-    root_cause, confidence, severity, impact, summary, category, biz_code = perform_rca_and_playbook(
+    root_cause, confidence, severity, impact, summary, category, biz_code, biz_name = perform_rca_and_playbook(
         host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, action_trail, net_probes
     )
 
@@ -200,8 +206,6 @@ def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, 
         "stack_trace": stack_trace
     }, ensure_ascii=False)
 
-    def pg_esc(s):
-        return (str(s) if s is not None else '').replace("'", "''")
 
     sql = f"""
     DO $$
@@ -270,7 +274,7 @@ class GatewayHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(str(e).encode())
 
     def do_POST(self):
-        if self.path.startswith('/api/v1/sensors/forensics/report'):
+        if self.path.startswith('/api/v1/sensors/forensics/report') or self.path.startswith('/api/dlp/forensics/snapshot'):
             try:
                 length = int(self.headers.get('Content-Length', 0))
                 body = self.rfile.read(length).decode('utf-8', errors='ignore')
