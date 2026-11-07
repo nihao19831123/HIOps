@@ -170,26 +170,27 @@ def query_7b_model(biz_code, biz_name, root_cause, ocr_error, proc_name):
     t0 = time.time()
     endpoint = "http://192.168.2.19:11434/api/generate"
     try:
-        user_prompt = f"【现场故障应急】\n业务系统: [{biz_code}] {biz_name}\n故障定界: {root_cause}\n前台进程: {proc_name}\n现场报错OCR: {ocr_error or '无报错弹窗'}\n请输出P1应急查杀SQL与核心排查指令。"
+        user_prompt = f"【现场故障应急】\n业务系统: [{biz_code}] {biz_name}\n故障定界: {root_cause}\n前台进程: {proc_name}\n现场报错OCR: {ocr_error or '无报错弹窗'}\n请输出P1应急查杀SQL与核心排查指令(100字以内)。"
         payload = {
             "model": "hiops-rca",
             "prompt": user_prompt,
             "stream": False,
             "keep_alive": -1,
             "options": {
-                "num_predict": 200,
+                "num_predict": 80,
                 "temperature": 0.1
             }
         }
         data_bytes = json.dumps(payload).encode('utf-8')
         req = urllib.request.Request(endpoint, data=data_bytes, headers={"Content-Type": "application/json"})
         print(f"[AI CALL START] 向 192.168.2.19 (/api/generate) 发送大模型推理请求...", flush=True)
-        with urllib.request.urlopen(req, timeout=90) as resp:
+        with urllib.request.urlopen(req, timeout=180) as resp:
             resp_json = json.loads(resp.read().decode('utf-8'))
             ai_text = resp_json.get('response', '').strip()
             latency = int((time.time() - t0) * 1000)
             print(f"[AI CALL SUCCESS] 192.168.2.19 大模型推理成功！耗时: {latency}ms", flush=True)
             return ai_text, latency, user_prompt, json.dumps(resp_json, ensure_ascii=False)
+
     except Exception as e:
         print(f"[7B MODEL CALL FAILED] {e}", flush=True)
         return None, 0, None, None
