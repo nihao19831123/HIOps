@@ -237,9 +237,14 @@ CREATE INDEX IF NOT EXISTS "IX_BusinessInterfaceUsages_InterfaceCode" ON public.
 
 -- 6. 现有表的字段补充
 ALTER TABLE public."Incidents" ADD COLUMN IF NOT EXISTS "ResolvedReason" character varying(512);
+ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "AssetId" uuid;
+ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "AssetName" character varying(256);
+ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "EventId" uuid;
+ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "IncidentId" uuid;
 ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "LastAlertedAt" timestamp with time zone;
 ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "MatchedBy" character varying(32);
 ALTER TABLE public."ErrorClusters" ADD COLUMN IF NOT EXISTS "ObservedHosts" character varying(256);
+
 
 -- 7. 写入默认终端探针全院鉴权 Key (支持多种哈希形式比对，确保即插即用)
 INSERT INTO public."DlpAgentKeys" ("DeviceId", "KeyHash", "Label", "CreatedBy", "CreatedAt")
