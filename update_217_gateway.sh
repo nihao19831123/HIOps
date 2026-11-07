@@ -145,6 +145,28 @@ def perform_rca_and_playbook(host, ip, trigger, win_title, proc_name, ocr_error,
     summary_text = "\n".join(evidence) + "\n\n" + "\n".join(playbook)
     return root_cause, confidence, severity, impact, summary_text, category, biz_code
 
+def query_7b_model(biz_code, biz_name, root_cause, ocr_error, proc_name):
+    import time
+    t0 = time.time()
+    endpoint = "http://192.168.2.19:11434/v1/chat/completions"
+    try:
+        user_prompt = f"【医院现场故障处置】\n业务系统: [{biz_code}] {biz_name}\n故障定界: {root_cause}\n前台进程: {proc_name}\n现场报错OCR: {ocr_error or '无报错弹窗'}\n请输出专业排查指令与处置处方。"
+        payload = {
+            "model": "hiops-rca",
+            "messages": [{"role": "user", "content": user_prompt}],
+            "max_tokens": 300
+        }
+        data_bytes = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request(endpoint, data=data_bytes, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            resp_json = json.loads(resp.read().decode('utf-8'))
+            ai_text = resp_json['choices'][0]['message']['content'].strip()
+            latency = int((time.time() - t0) * 1000)
+            return ai_text, latency, user_prompt, json.dumps(resp_json, ensure_ascii=False)
+    except Exception as e:
+        print(f"[7B MODEL INFERENCE SKIPPED/FAILED] {e}", flush=True)
+        return None, 0, None, None
+
 def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, action_trail, net_probes, fingerprint):
     inc_id = str(uuid.uuid4())
     evt_id = str(uuid.uuid4())
@@ -154,6 +176,18 @@ def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, 
     root_cause, confidence, severity, impact, summary, category, biz_code = perform_rca_and_playbook(
         host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, action_trail, net_probes
     )
+
+    ai_text, latency_ms, payload_masked, verdict_json = query_7b_model(
+        biz_code, biz_name, root_cause, ocr_error, proc_name
+    )
+    audit_sql = ""
+    if ai_text:
+        summary = summary + "\n\n【7B 大模型 (hiops-rca@192.168.2.19) 实时智能处方】\n" + ai_text
+        audit_id = str(uuid.uuid4())
+        audit_sql = f"""
+        INSERT INTO "SemanticAdjudicationAudits" ("Id", "IncidentId", "Mode", "Model", "EndpointHost", "PayloadMasked", "VerdictJson", "Status", "LatencyMs")
+        VALUES ('{audit_id}', '{inc_id}', 'IntranetPrivate', 'hiops-rca', 'http://192.168.2.19:11434/v1', '{pg_esc(payload_masked)}', '{pg_esc(verdict_json)}', 'Success', {latency_ms});
+        """
 
     title = f"[{biz_code}] 终端故障报修: {host} [{win_title[:24]}]"
 
@@ -184,6 +218,8 @@ def save_to_db(host, ip, trigger, win_title, proc_name, ocr_error, stack_trace, 
         
         INSERT INTO "IncidentEvents" ("Id", "IncidentId", "EventId", "Relation")
         VALUES ('{rel_id}', '{inc_id}', '{evt_id}', 'Trigger');
+
+        {audit_sql}
     END $$;
     """
 
