@@ -158,12 +158,13 @@ def query_7b_model(biz_code, biz_name, root_cause, ocr_error, proc_name):
         payload = {
             "model": "hiops-rca",
             "messages": [{"role": "user", "content": user_prompt}],
-            "max_tokens": 300
+            "max_tokens": 300,
+            "keep_alive": -1
         }
         data_bytes = json.dumps(payload).encode('utf-8')
         req = urllib.request.Request(endpoint, data=data_bytes, headers={"Content-Type": "application/json"})
         print(f"[AI CALL START] 向 192.168.2.19 发送大模型推理请求...", flush=True)
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with urllib.request.urlopen(req, timeout=90) as resp:
             resp_json = json.loads(resp.read().decode('utf-8'))
             ai_text = resp_json['choices'][0]['message']['content'].strip()
             latency = int((time.time() - t0) * 1000)
@@ -280,12 +281,12 @@ class GatewayHandler(http.server.BaseHTTPRequestHandler):
                 body = self.rfile.read(length).decode('utf-8', errors='ignore')
                 data = json.loads(body) if body else {}
 
-                host = data.get('hostname') or data.get('asset_code') or data.get('hostName') or 'PC-TERMINAL'
-                ip = data.get('ipAddress') or data.get('ip_address') or ''
-                trigger = data.get('trigger_type') or data.get('triggerType') or 'MANUAL_HOTKEY'
-                win_title = data.get('active_window_title') or data.get('activeWindowTitle') or '临床桌面应用'
-                proc_name = data.get('active_process_name') or data.get('activeProcessName') or 'his_clinic.exe'
-                ocr_error = data.get('ocr_error_text') or data.get('ocrErrorText') or ''
+                host = data.get('hostname') or data.get('asset_code') or data.get('hostName') or data.get('host') or 'PC-TERMINAL'
+                ip = data.get('ipAddress') or data.get('ip_address') or data.get('ip') or ''
+                trigger = data.get('trigger_type') or data.get('triggerType') or data.get('trigger') or 'MANUAL_HOTKEY'
+                win_title = data.get('active_window_title') or data.get('activeWindowTitle') or data.get('active_window') or '临床桌面应用'
+                proc_name = data.get('active_process_name') or data.get('activeProcessName') or data.get('active_process') or 'his_clinic.exe'
+                ocr_error = data.get('ocr_error_text') or data.get('ocrErrorText') or data.get('ocr_error') or ''
                 stack_trace = data.get('stack_trace') or data.get('stackTrace') or ''
                 action_trail = data.get('action_trail') or data.get('actionTrail') or []
                 net_probes = data.get('net_probes') or data.get('netProbes') or []
