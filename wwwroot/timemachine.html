@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HIOps 临床终端 60 秒因果时光机演播大厅</title>
+<style>
+:root{--bg:#0b0f19;--panel:#131b2e;--card:#1e293b;--border:#2a374f;--text:#f1f5f9;--muted:#94a3b8;--dim:#64748b;--blue:#3b82f6;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--panel);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.brand-text h1{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.badge{font-size:11px;padding:2px 6px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.4);border-radius:4px;color:#60a5fa}
+.brand-text p{font-size:11px;color:var(--muted)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.status-pill{display:flex;align-items:center;gap:6px;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green)}
+.btn{font-size:12px;padding:6px 12px;border-radius:6px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:none;text-decoration:none}
+.btn-sec{background:#334155;color:#e2e8f0}.btn-sec:hover{background:#475569}
+.btn-pri{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff}.btn-pri:hover{background:#1d4ed8}
+.main{display:grid;grid-template-columns:280px 1fr 340px;gap:12px;padding:12px;flex:1;height:calc(100vh - 60px)}
+@media(max-width:1200px){.main{grid-template-columns:1fr;height:auto}}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.panel-head{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(30,41,59,0.4);font-size:12px;font-weight:600;color:#cbd5e1}
+.panel-body{padding:12px;overflow-y:auto;flex:1}
+.inc-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.inc-card:hover{border-color:var(--blue);background:#27354f}
+.inc-card.active{background:linear-gradient(135deg,rgba(30,41,59,.9),rgba(59,130,246,.15));border-color:var(--blue);box-shadow:0 0 10px rgba(59,130,246,.25)}
+.tag{font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600}
+.tag-his{background:rgba(59,130,246,.2);color:#60a5fa;border:1px solid rgba(59,130,246,.4)}
+.tag-pacs{background:rgba(139,92,246,.2);color:#a78bfa;border:1px solid rgba(139,92,246,.4)}
+.tag-lis{background:rgba(16,185,129,.2);color:#34d399;border:1px solid rgba(16,185,129,.4)}
+.stage-head{background:linear-gradient(180deg,#1e293b,#0f172a);border-bottom:1px solid var(--border);padding:14px;display:flex;flex-direction:column;gap:10px}
+.stage-top{display:flex;justify-content:space-between;align-items:center}
+.stage-title h2{font-size:15px;display:flex;align-items:center;gap:8px}
+.stage-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.counter{text-align:right}
+.counter-time{font-family:monospace;font-size:24px;font-weight:800;color:#38bdf8;text-shadow:0 0 10px rgba(56,189,248,.5)}
+.counter-lbl{font-size:10px;color:var(--dim)}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ctrl-group{display:flex;align-items:center;gap:5px}
+.ctrl-btn{background:#334155;border:1px solid var(--border);color:#cbd5e1;padding:5px 10px;border-radius:4px;font-size:11px;cursor:pointer}
+.ctrl-btn:hover{background:#475569;color:#fff}
+.ctrl-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.play-btn{background:var(--blue);color:#fff;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.scrubber-wrap{padding:4px 0}
+.scrubber-track{height:6px;background:#334155;border-radius:3px;position:relative;cursor:pointer}
+.scrubber-fill{height:100%;background:linear-gradient(90deg,var(--blue),#38bdf8);border-radius:3px;width:100%}
+.scrubber-thumb{position:absolute;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 6px var(--blue);transform:translateX(-50%)}
+.scrubber-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px}
+.stream{padding:14px;position:relative}
+.stream::before{content:"";position:absolute;left:24px;top:0;bottom:0;width:2px;background:var(--border)}
+.trail-card{position:relative;margin-left:24px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.trail-card:hover{background:#27354f;transform:translateX(3px)}
+.trail-card.current{border-color:#38bdf8;box-shadow:0 0 12px rgba(56,189,248,.25);background:linear-gradient(135deg,rgba(30,41,59,.95),rgba(56,189,248,.08))}
+.trail-node{position:absolute;left:-29px;top:12px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--blue);box-shadow:0 0 6px var(--blue)}
+.node-click{border-color:var(--amber);box-shadow:0 0 6px var(--amber)}
+.node-probe{border-color:var(--purple);box-shadow:0 0 6px var(--purple)}
+.node-trigger{border-color:var(--red);background:var(--red);box-shadow:0 0 10px var(--red)}
+.trail-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.trail-tag{font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600}
+.tt-win{background:rgba(59,130,246,.15);color:#60a5fa}
+.tt-click{background:rgba(245,158,11,.15);color:#fbbf24}
+.tt-probe{background:rgba(139,92,246,.15);color:#c084fc}
+.tt-trig{background:rgba(239,68,68,.2);color:#f87171}
+.trail-time{font-size:10px;color:var(--dim);font-family:monospace}
+.trail-target{font-size:12px;font-weight:600;color:#e2e8f0}
+.trail-detail{font-size:11px;color:var(--muted);margin-top:3px;background:rgba(15,23,42,.5);padding:4px 8px;border-radius:4px;border-left:2px solid var(--blue)}
+.rca-box{background:linear-gradient(135deg,rgba(30,41,59,.8),rgba(15,23,42,.9));border:1px solid rgba(59,130,246,.3);border-radius:6px;padding:10px;margin-bottom:10px}
+.rca-head{font-size:12px;font-weight:700;color:#60a5fa;display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.rca-text{font-size:12px;color:#fff;font-weight:600;line-height:1.4;margin-bottom:6px}
+.rca-meta{display:flex;gap:8px;font-size:10px;color:var(--muted);padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:6px}
+.meter{height:5px;background:#334155;border-radius:3px;overflow:hidden;flex:1}
+.meter-bar{height:100%;background:var(--green)}
+.cmd{background:rgba(15,23,42,.9);border:1px dashed #475569;border-radius:4px;padding:6px 8px;font-family:monospace;font-size:10px;color:#38bdf8;margin:5px 0;display:flex;justify-content:space-between;align-items:center}
+.pill{font-size:9px;background:#334155;padding:1px 5px;border-radius:3px;color:#cbd5e1;cursor:pointer}
+.pill:hover{background:#475569;color:#fff}
+.json-box{background:#090d16;border:1px solid #1e293b;border-radius:4px;padding:8px;font-family:monospace;font-size:10px;color:#94a3b8;max-height:140px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
+</style>
+</head>
+<body>
+<header>
+<div class="brand">
+  <div class="brand-icon">⏱</div>
+  <div class="brand-text">
+    <h1>HIOps 临床故障 60 秒时空因果演播大厅 <span class="badge">V2.7 企业实战版 (Laya双脑+源码切片)</span></h1>
+    <p>端侧 60 秒无感时序抓取 · Laya 快脑概率仲裁 · Oracle 1521 单飞熔断探针 · 11.8万厂家C#源码切片 · 7B语义缓存处方</p>
+  </div>
+</div>
+<div class="header-actions">
+  <div class="status-pill">● 时光机内核就绪 (PII脱敏已审计)</div>
+  <button class="btn btn-sec" onclick="fetchLive()">🔄 刷新快照</button>
+  <a href="/" class="btn btn-pri">← 返回工作台</a>
+</div>
+</header>
+<div class="main">
+  <div class="panel">
+    <div class="panel-head"><span>近期现场快照</span><span id="snap-count" style="font-size:10px;color:var(--dim)"></span></div>
+    <div class="panel-body" id="inc-list"></div>
+  </div>
+  <div class="panel">
+    <div class="stage-head">
+      <div class="stage-top">
+        <div class="stage-title">
+          <h2><span class="tag tag-his" id="st-biz">HIS</span><span id="st-title">WIN7虚拟机0031 (192.168.50.67) - 门诊医生站</span></h2>
+          <div class="stage-sub" id="st-sub">进程: <b style="color:#fff" id="st-proc">Mandala.Platform.exe</b> | 触发: <span id="st-trig" style="color:#f59e0b">MANUAL_HOTKEY</span></div>
+        </div>
+        <div class="counter">
+          <div class="counter-time" id="timer-val">T - 00:00</div>
+          <div class="counter-lbl">相对爆发时刻倒推</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="ctrl-group">
+          <button class="ctrl-btn" onclick="step(-1)">⏮ 上一步</button>
+          <button class="play-btn" id="btn-play" onclick="togglePlay()">▶</button>
+          <button class="ctrl-btn" onclick="step(1)">下一步 ⏭</button>
+          <button class="ctrl-btn" onclick="resetPlay()">重置(T-60s)</button>
+        </div>
+        <div class="ctrl-group">
+          <span style="font-size:10px;color:var(--dim)">速率:</span>
+          <button class="ctrl-btn active" id="spd-1" onclick="setSpd(1)">1x</button>
+          <button class="ctrl-btn" id="spd-2" onclick="setSpd(2)">2x</button>
+          <button class="ctrl-btn" id="spd-5" onclick="setSpd(5)">5x</button>
+        </div>
+      </div>
+      <div class="scrubber-wrap">
+        <div class="scrubber-track" id="sc-track" onclick="scrub(event)">
+          <div class="scrubber-fill" id="sc-fill"></div>
+          <div class="scrubber-thumb" id="sc-thumb"></div>
+        </div>
+        <div class="scrubber-scale"><span>T-60s (因果起点)</span><span>-45s</span><span>-30s</span><span>-15s</span><span style="color:#f87171;font-weight:700">T-00s (爆发)</span></div>
+      </div>
+    </div>
+    <div class="panel-body" style="padding:0"><div class="stream" id="stream-box"></div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><span>智能 RCA 诊断与研发复现包</span><span class="pill" onclick="copyRepro()">复制研发包</span></div>
+    <div class="panel-body">
+      <div class="rca-box">
+        <div class="rca-head">⚖ 专家级 RCA 仲裁结论</div>
+        <div class="rca-text" id="rca-text">[核心数据库/中间件异常] 医保/HIS 核心数据库会话锁阻断或连接超时</div>
+        <div class="rca-meta">
+          <span>把握: <b style="color:#10b981" id="rca-conf">92%</b></span>
+          <span>等级: <b style="color:#ef4444" id="rca-sev">P1 紧急</b></span>
+          <span>免疫: <b style="color:#60a5fa" id="rca-victim">已自动折叠压制</b></span>
+        </div>
+        <div style="font-size:11px;color:#cbd5e1;line-height:1.4" id="rca-evid">
+          • 业务识别: 识别前台业务为 [HIS] 曼荼罗门诊医生站<br>
+          • 探针证据: Oracle 1521 探针延迟恶化，发生会话锁阻塞<br>
+          • 临床定性: 门诊终端仅为受害者，无需重装电脑
+        </div>
+        <div id="laya-panel" style="margin-top:8px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.15)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:11px;font-weight:700;color:#38bdf8">⚡ Laya 双脑硬仲裁 (System 1 快脑)</span>
+            <span id="laya-winner" style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(56,189,248,.2);color:#38bdf8;border:1px solid rgba(56,189,248,.4)">DATABASE</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px;background:rgba(15,23,42,.6);padding:6px;border-radius:4px">
+            <div>DB核心库: <b id="laya-db" style="color:#10b981">94.1%</b></div>
+            <div>代码切片: <b id="laya-code" style="color:#94a3b8">2.0%</b></div>
+            <div>网络链路: <b id="laya-net" style="color:#94a3b8">2.0%</b></div>
+            <div>终端单机: <b id="laya-pc" style="color:#94a3b8">1.8%</b></div>
+          </div>
+          <div id="laya-immunity-badge" style="font-size:10px;color:#a78bfa;margin-top:4px;display:none">🛡️ 已激活受害者群体免疫 (已自动压制单机误报)</div>
+        </div>
+      </div>
+      <div id="code-slice-panel" style="display:none;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:600;color:#f59e0b;margin-bottom:4px">🔍 厂家 C# 真实源码秒级切片定位:</div>
+        <div id="code-slice-meta" style="font-size:10px;color:#38bdf8;margin-bottom:3px;word-break:break-all"></div>
+        <div class="json-box" id="code-slice-box" style="color:#e2e8f0;border-color:rgba(245,158,11,.35);max-height:110px"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8;margin-bottom:6px">端侧合成网络微探针与 Oracle 只读快照:</div>
+      <div id="probe-list">
+        <div style="font-size:10px;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+          <span style="width:130px">Oracle DB (1521)</span><div class="meter"><div class="meter-bar" style="width:95%"></div></div><span style="color:#34d399;font-family:monospace">0.8ms</span>
+        </div>
+        <div style="font-size:10px;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+          <span style="width:130px">HIOps API (5080)</span><div class="meter"><div class="meter-bar" style="width:92%"></div></div><span style="color:#34d399;font-family:monospace">1.2ms</span>
+        </div>
+        <div style="font-size:10px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+          <span style="width:130px">Gateway (80)</span><div class="meter"><div class="meter-bar" style="width:98%"></div></div><span style="color:#34d399;font-family:monospace">0.5ms</span>
+        </div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8;margin-bottom:4px">7B 慢脑协同与临床护栏处方 (Playbook):</div>
+      <div id="playbook-list">
+        <div class="cmd"><span>ALTER SYSTEM KILL SESSION 'sid,serial#' IMMEDIATE;</span><span class="pill" onclick="copyTxt('ALTER SYSTEM KILL SESSION \'sid,serial#\' IMMEDIATE;')">复制</span></div>
+        <div class="cmd"><span>SELECT blocking_session FROM v$session WHERE blocking_session IS NOT NULL;</span><span class="pill" onclick="copyTxt('SELECT blocking_session FROM v$session WHERE blocking_session IS NOT NULL;')">复制</span></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8;margin:8px 0 4px;display:flex;justify-content:space-between"><span>确定性复现包 (JSON):</span><span style="color:#38bdf8;font-size:9px">PII脱敏 ✓</span></div>
+      <div class="json-box" id="json-box"></div>
+    </div>
+  </div>
+</div>
+<script>
+const DEF_DATA = {
+  id: "evt-win7-0031", title: "[HIS] 门诊医生站 处方录入卡死与留证", host: "WIN7虚拟机0031", ip: "192.168.50.67", proc: "Mandala.Platform.exe", biz: "HIS",
+  trigger: "MANUAL_HOTKEY (快捷键 Ctrl+Alt+H 留证)", time: "2026-11-08 11:15:20",
+  rootCause: "[核心数据库/中间件异常] 医保/HIS 核心数据库会话锁阻断或连接超时 (影响业务: 门诊住院HIS系统)", confidence: 0.92,
+  layaDecision: {
+    winner: "DATABASE",
+    confidence: 0.941,
+    probabilities: { DATABASE: 0.941, APP_CODE: 0.02, NETWORK: 0.02, PC: 0.018 },
+    victim_immunity: true,
+    brief: "Laya硬仲裁: P(DB)=94.1%, P(Code)=2.0%, P(Net)=2.0%, P(PC)=1.8%"
+  },
+  actionTrail: [
+    { relSeconds: -58, timestamp: "11:14:22", type: "SYS_EVENT", target: "ACTION_TRAIL", detail: "因果时光机内核就绪，WinEventHook监听激活，进入60秒环形缓冲" },
+    { relSeconds: -48, timestamp: "11:14:32", type: "WINDOW_SWITCH", target: "Mandala.Platform.exe", detail: "前台窗口流转: 曼荼罗门诊医生站 - [门诊处方录入] | PID: 18156" },
+    { relSeconds: -38, timestamp: "11:14:42", type: "UI_CLICK", target: "Mandala.Platform.exe", detail: "焦点控件: txtPatientNo [患者卡号检索] | PII已脱敏: 3702********1234" },
+    { relSeconds: -25, timestamp: "11:14:55", type: "UI_CLICK", target: "Mandala.Platform.exe", detail: "焦点控件: btnPrescriptionSave [保存处方] | 触发事务写锁请求" },
+    { relSeconds: -15, timestamp: "11:15:05", type: "NET_PROBE", target: "TCP_1521", detail: "微探针连接存活: -> 192.168.0.3:1521 (Oracle_HIS_DB) 延迟严重劣化 (锁等待)" },
+    { relSeconds: -8, timestamp: "11:15:12", type: "NET_PROBE", target: "TCP_1521", detail: "微探针连接存活: -> 192.168.0.3:1521 (Oracle_HIS_DB) 持续等待锁释放" },
+    { relSeconds: 0, timestamp: "11:15:20", type: "INCIDENT_TRIGGER", target: "HIOps.EndpointSensor.exe", detail: "【故障留证爆发点】医护人员触发快捷键 Ctrl+Alt+H，60秒因果时光机原子冻结出站！" }
+  ]
+};
+let curInc = DEF_DATA, curIdx = curInc.actionTrail.length - 1, isPlaying = false, timer = null, spd = 1;
+function renderList(){
+  const box = document.getElementById('inc-list'); box.innerHTML = '';
+  const list = [curInc,
+    {id:'evt-pacs',title:'[PACS] 放射科影像调阅超时留证',host:'MZ-DOCTOR-01',ip:'192.168.39.11',proc:'Display.exe',biz:'PACS',trigger:'UI_HANG(8.5s)',time:'10:40:15',rootCause:'[网络切片/中间件抖动] DICOM-C-STORE 队列拥塞',confidence:0.88,actionTrail:[{relSeconds:-40,timestamp:'10:39:35',type:'WINDOW_SWITCH',target:'Display.exe',detail:'前台窗口: PACS影像查看'},{relSeconds:-15,timestamp:'10:40:00',type:'UI_CLICK',target:'Display.exe',detail:'加载CT序列'},{relSeconds:0,timestamp:'10:40:15',type:'INCIDENT_TRIGGER',target:'Display.exe',detail:'UI消息循环超8.5秒无响应'}]},
+    {id:'evt-lis',title:'[LIS] 检验条码打印队列异常',host:'LIS-WORKSTATION-02',ip:'192.168.32.14',proc:'splwow64.exe',biz:'LIS',trigger:'MANUAL_HOTKEY',time:'09:12:30',rootCause:'[终端本地服务异常] Windows Print Spooler 服务挂起死锁',confidence:0.95,actionTrail:[{relSeconds:-30,timestamp:'09:12:00',type:'WINDOW_SWITCH',target:'javaw.exe',detail:'LIS 中间件打印队列就绪'},{relSeconds:-10,timestamp:'09:12:20',type:'UI_CLICK',target:'splwow64.exe',detail:'假脱机驱动挂起'},{relSeconds:0,timestamp:'09:12:30',type:'INCIDENT_TRIGGER',target:'HIOps.EndpointSensor.exe',detail:'医护留证，建议一键自愈'}]}
+  ];
+  document.getElementById('snap-count').innerText = list.length + ' 条现场快照';
+  list.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'inc-card ' + (item.id === curInc.id ? 'active' : '');
+    d.onclick = () => { curInc = item; curIdx = item.actionTrail.length - 1; resetPlay(); renderStage(); renderList(); };
+    d.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="tag tag-' + item.biz.toLowerCase() + '">' + item.biz + '</span><span style="font-size:10px;color:var(--dim)">' + item.time.split(' ')[1] + '</span></div><div style="font-size:12px;font-weight:600">' + item.title + '</div><div style="font-size:10px;color:var(--muted);margin-top:4px">💻 ' + item.host + ' <span style="color:#38bdf8">' + item.ip + '</span></div>';
+    box.appendChild(d);
+  });
+}
+function renderStage(){
+  document.getElementById('st-title').innerText = curInc.host + ' (' + curInc.ip + ') - 现场留证';
+  document.getElementById('st-proc').innerText = curInc.proc;
+  document.getElementById('st-trig').innerText = curInc.trigger;
+  const tag = document.getElementById('st-biz'); tag.className = 'tag tag-' + curInc.biz.toLowerCase(); tag.innerText = curInc.biz;
+  document.getElementById('rca-text').innerText = curInc.rootCause || '分析中...';
+  document.getElementById('rca-conf').innerText = Math.round((curInc.confidence || 0.85)*100) + '%';
+  document.getElementById('json-box').innerText = JSON.stringify(curInc, null, 2);
+  const laya = curInc.layaDecision || curInc.laya_decision;
+  const layaPanel = document.getElementById('laya-panel');
+  if(layaPanel){
+    if(laya && laya.probabilities){
+      layaPanel.style.display = 'block';
+      const wEl = document.getElementById('laya-winner');
+      if(wEl) wEl.innerText = laya.winner || 'DATABASE';
+      const p = laya.probabilities;
+      const dbEl = document.getElementById('laya-db'); if(dbEl) dbEl.innerText = Math.round((p.DATABASE||0)*100) + '%';
+      const codeEl = document.getElementById('laya-code'); if(codeEl) codeEl.innerText = Math.round((p.APP_CODE||0)*100) + '%';
+      const netEl = document.getElementById('laya-net'); if(netEl) netEl.innerText = Math.round((p.NETWORK||0)*100) + '%';
+      const pcEl = document.getElementById('laya-pc'); if(pcEl) pcEl.innerText = Math.round((p.PC||0)*100) + '%';
+      const immEl = document.getElementById('laya-immunity-badge');
+      if(immEl) immEl.style.display = laya.victim_immunity ? 'block' : 'none';
+    } else {
+      layaPanel.style.display = 'none';
+    }
+  }
+  const trail = curInc.actionTrail || [];
+  const sBox = document.getElementById('stream-box'); sBox.innerHTML = '';
+  trail.forEach((item, idx) => {
+    const c = document.createElement('div');
+    c.className = 'trail-card ' + (idx === curIdx ? 'current' : '');
+    c.id = 'tc-' + idx; c.onclick = () => { curIdx = idx; syncScrubber(); };
+    let nCls = '', tCls = 'tt-win', tName = '窗口切换';
+    if(item.type === 'UI_CLICK'){ nCls = 'node-click'; tCls = 'tt-click'; tName = '控件焦点流转'; }
+    else if(item.type === 'NET_PROBE'){ nCls = 'node-probe'; tCls = 'tt-probe'; tName = '网络微探针'; }
+    else if(item.type === 'INCIDENT_TRIGGER'){ nCls = 'node-trigger'; tCls = 'tt-trig'; tName = '故障爆发点'; }
+    const rSec = item.relSeconds !== undefined ? item.relSeconds : (idx === trail.length-1 ? 0 : -(trail.length-1-idx)*8);
+    const rStr = rSec === 0 ? 'T-00.0s (爆发)' : 'T ' + (rSec>0?'+':'') + rSec + 's';
+    c.innerHTML = '<div class="trail-node ' + nCls + '"></div><div class="trail-top"><span class="trail-tag ' + tCls + '">' + tName + '</span><span class="trail-time">' + rStr + ' | ' + item.timestamp + '</span></div><div class="trail-target">' + item.target + '</div><div class="trail-detail">' + item.detail + '</div>';
+    sBox.appendChild(c);
+  });
+  syncScrubber();
+}
+function syncScrubber(){
+  const trail = curInc.actionTrail || []; if(!trail.length) return;
+  const pct = trail.length > 1 ? (curIdx / (trail.length - 1)) * 100 : 100;
+  document.getElementById('sc-fill').style.width = pct + '%';
+  document.getElementById('sc-thumb').style.left = pct + '%';
+  const cur = trail[curIdx];
+  const rSec = cur.relSeconds !== undefined ? cur.relSeconds : (curIdx === trail.length-1 ? 0 : -(trail.length-1-curIdx)*8);
+  const aSec = Math.abs(rSec), m = String(Math.floor(aSec/60)).padStart(2,'0'), s = String(aSec%60).padStart(2,'0');
+  document.getElementById('timer-val').innerText = rSec === 0 ? 'T - 00:00' : 'T - ' + m + ':' + s;
+  trail.forEach((_, idx) => {
+    const el = document.getElementById('tc-' + idx);
+    if(el){ if(idx === curIdx){ el.classList.add('current'); el.scrollIntoView({behavior:'smooth',block:'nearest'}); } else el.classList.remove('current'); }
+  });
+}
+function step(d){ const t = curInc.actionTrail || []; const n = curIdx + d; if(n >= 0 && n < t.length){ curIdx = n; syncScrubber(); } }
+function resetPlay(){ pause(); curIdx = 0; syncScrubber(); }
+function togglePlay(){ if(isPlaying) pause(); else play(); }
+function play(){
+  isPlaying = true; document.getElementById('btn-play').innerText = '⏸';
+  if(curIdx >= curInc.actionTrail.length - 1) curIdx = 0;
+  timer = setInterval(() => { if(curIdx < curInc.actionTrail.length - 1){ curIdx++; syncScrubber(); } else pause(); }, 1500 / spd);
+}
+function pause(){ isPlaying = false; document.getElementById('btn-play').innerText = '▶'; if(timer){ clearInterval(timer); timer = null; } }
+function setSpd(s){ spd = s; [1,2,5].forEach(x => { const b = document.getElementById('spd-'+x); if(b) b.classList.toggle('active', x===s); }); if(isPlaying){ pause(); play(); } }
+function scrub(e){
+  const r = document.getElementById('sc-track').getBoundingClientRect();
+  const p = Math.max(0, Math.min(1, (e.clientX - r.left)/r.width));
+  const t = curInc.actionTrail || []; curIdx = Math.round(p * (t.length - 1)); syncScrubber();
+}
+function copyRepro(){ copyTxt(JSON.stringify(curInc, null, 2), '研发级确定性复现包已复制！可直接发送给工程师。'); }
+function copyTxt(t, m='已复制到剪贴板'){ navigator.clipboard.writeText(t).then(()=>alert(m)).catch(()=>alert('内容: '+t.substring(0,40))); }
+async function fetchLive(){
+  try{
+    const r = await fetch('/api/v1/sensors/timemachine/latest');
+    if(r.ok){
+      const d = await r.json();
+      if(d && d.actionTrail && d.actionTrail.length > 0){
+        curInc = d; curIdx = d.actionTrail.length - 1; renderStage(); renderList(); alert('已成功同步最新端侧 60 秒因果流水！');
+      }
+    }
+  }catch(e){ console.log(e); }
+}
+window.onload = () => { renderList(); renderStage(); fetchLive(); };
+</script>
+</body>
+</html>
